@@ -1,0 +1,22 @@
+<resources>
+
+    <!--Keys-->
+    <string name="name_key">name</string>
+    <string name="formatted_address_key">formatted_address</string>
+    <string name="geometry_key">geometry</string>
+    <string name="location_key">location</string>
+    <string name="latitude_key">lat</string>
+    <string name="longitude_key">lng</string>
+    <string name="icon_key">icon</string>
+    <string name="photos_key">photos</string>
+    <string name="photo_reference">photo_reference</string>
+    <string name="place_id_key">place_id</string>
+    <string name="rating_key">rating</string>
+    <string name="reference_key">reference</string>
+    <string name="types_key">types</string>
+    <string name="access_points_key">access_points</string>
+    <string name="travel_modes_key">travel_modes</string>
+    <!--Keys End-->
+    <string name="app_name">GideMe</string>
+    <string name="action_settings">Settings</string>
+</resources>
