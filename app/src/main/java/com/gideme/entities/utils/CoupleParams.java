@@ -5,31 +5,56 @@ package com.gideme.entities.utils;
  */
 public class CoupleParams {
 
-    private String key;
-    private String param;
-    private Object object;
+    private final String key;
+    private final String param;
+    private final Object object;
+
+    public CoupleParams(String key, String param, Object object) {
+        this.key = key;
+        this.param = param;
+        this.object = object;
+    }
 
     public String getKey() {
         return key;
     }
 
-    public void setKey(String key) {
-        this.key = key;
-    }
 
     public String getParam() {
         return param;
     }
 
-    public void setParam(String param) {
-        this.param = param;
-    }
 
     public Object getObject() {
         return object;
     }
 
-    public void setObject(Object object) {
-        this.object = object;
+    public static class CoupleParamBuilder {
+
+        private String nestedKey;
+        private String nestedParam;
+        private Object nestedObject;
+
+        public CoupleParamBuilder(String nestedKey) {
+            this.nestedKey = nestedKey;
+        }
+
+        public CoupleParamBuilder nestedParam(String nestedParam) {
+            this.nestedParam = nestedParam;
+            return this;
+        }
+
+        public CoupleParamBuilder nestedObject(Object nestedObject) {
+            this.nestedObject = nestedObject;
+            return this;
+        }
+
+        public CoupleParams createCoupleParam() {
+            return new CoupleParams(this.nestedKey,
+                    this.nestedParam, this.nestedObject);
+        }
+
     }
+
+
 }

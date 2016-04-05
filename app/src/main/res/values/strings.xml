@@ -1,5 +1,7 @@
 <resources>
 
+    <string name="google_places_api_key">AIzaSyAi2W8KJdMj71vyzQcTy7kgXz9XjGyrkCU</string>
+
     <!--Keys-->
     <string name="name_key">name</string>
     <string name="formatted_address_key">formatted_address</string>
@@ -16,7 +18,16 @@
     <string name="types_key">types</string>
     <string name="access_points_key">access_points</string>
     <string name="travel_modes_key">travel_modes</string>
+    <string name="radius_key">radius</string>
+    <string name="key_key">key</string>
+    <string name="result_key">results</string>
     <!--Keys End-->
+
+    <!--URL-->
+    <string name="google_places_url">https://maps.googleapis.com/maps/api/place/nearbysearch/json</string>
+    <!--URL End-->
+
+    <string name="acept_label">Acceptar</string>
     <string name="app_name">GideMe</string>
     <string name="action_settings">Settings</string>
 </resources>

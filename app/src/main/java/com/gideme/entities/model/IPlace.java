@@ -2,9 +2,13 @@ package com.gideme.entities.model;
 
 import android.content.Context;
 
+import com.gideme.entities.dto.LocationDTO;
 import com.gideme.entities.dto.PlaceDTO;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by oscargallon on 4/4/16.
@@ -30,5 +34,23 @@ public interface IPlace {
      * @return
      */
     PlaceDTO addInformationToPlaceDTO(JSONObject jsonObject, Context context, PlaceDTO placeDTO);
+
+
+    /**
+     * Metodo para obtener una lista de lugares de un arreglo json
+     * @param jsonArray arreglo de lugares en formato json
+     * @param context contexto de la aplicación
+     * @return lista de lugares PlaceDTO
+     *         null si existe un error
+     */
+    List<PlaceDTO> getPlacesFromJsonArray(JSONArray jsonArray, Context context);
+
+    /**
+     * Metodo para obtener los lugares por categoria
+     * @param placesByCategory callback para llamar en caso
+     *                         de exito o error
+     */
+    void getPlacesbyCategory(IPlacesByCategory placesByCategory,String category, String radius
+                             , LocationDTO locationDTO, Context context);
 
 }

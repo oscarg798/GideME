@@ -27,6 +27,7 @@ public class HTTPServices extends AsyncTask<String, String, Boolean> {
      */
     private String stringRes = null;
 
+    private boolean isPlainUrlServices = false;
     /**
      * Tipos de servicios
      */
@@ -68,9 +69,12 @@ public class HTTPServices extends AsyncTask<String, String, Boolean> {
     private JSONObject errorJsonObject = null;
 
 
-    public HTTPServices(IHTTPServices httpServicesCallback, List<CoupleParams> paramsList) {
+    public HTTPServices(IHTTPServices httpServicesCallback, List<CoupleParams> paramsList,
+                        String servicesType, boolean isPlainUrlServices) {
         this.httpServicesCallback = httpServicesCallback;
         this.paramsList = paramsList;
+        this.servicesType = servicesType;
+        this.isPlainUrlServices = isPlainUrlServices;
     }
 
     @Override
@@ -87,17 +91,16 @@ public class HTTPServices extends AsyncTask<String, String, Boolean> {
         }
         try {
 
-            /**
-             * Damos formato a los parametros para enviarlos por
-             * la url al backend
-             */
-            String data = Utils.organizePostServicesParametres(paramsList);
-
-            /**
-             * Si hay datos que enviar los  aÃ±adimso a la url
-             */
-            if (data != null)
-                urlString += "?" + data;
+            if(this.isPlainUrlServices){
+                /**
+                 * Damos formato a los parametros para enviarlos por
+                 * la url al backend
+                 */
+                String data = Utils.organizePostServicesParametres(paramsList);
+                if (data != null) {
+                    urlString += "?" + data;
+                }
+            }
 
             /**
              * Creamos un nuevo objeto de tipo url
@@ -134,18 +137,18 @@ public class HTTPServices extends AsyncTask<String, String, Boolean> {
              */
             httpURLConnection.setRequestMethod(this.servicesType);
 
+            if(!this.isPlainUrlServices){
+                OutputStream outputStream = httpURLConnection.getOutputStream();
 
-            OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(outputStream, this.encodingType));
 
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(outputStream, this.encodingType));
+                writer.write(Utils.organizePostServicesParametres(this.paramsList));
 
-            writer.write(Utils.organizePostServicesParametres(this.paramsList));
-
-            writer.flush();
-            writer.close();
-            outputStream.close();
-
+                writer.flush();
+                writer.close();
+                outputStream.close();
+            }
 
             /**
              * nos conectamos

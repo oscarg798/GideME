@@ -27,4 +27,11 @@ public class LocationDTO {
         this.lng = lng;
     }
 
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
 }

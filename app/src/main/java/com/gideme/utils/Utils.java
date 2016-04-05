@@ -1,5 +1,6 @@
 package com.gideme.utils;
 
+import com.gideme.R;
 import com.gideme.entities.utils.CoupleParams;
 
 import android.app.Activity;
@@ -13,6 +14,9 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Base64;
 import android.view.View;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -43,10 +47,10 @@ public class Utils {
                 else
                     result.append("&");
 
-                result.append(URLEncoder.encode(coupleParams.getParam(), "UTF-8"));
+                result.append(URLEncoder.encode(coupleParams.getKey(), "UTF-8"));
                 result.append("=");
 
-                result.append(URLEncoder.encode(coupleParams.getKey(), "UTF-8"));
+                result.append(URLEncoder.encode(coupleParams.getParam(), "UTF-8"));
 
             }
         } catch (UnsupportedEncodingException e) {
@@ -55,6 +59,25 @@ public class Utils {
 
         return result.toString();
 
+    }
+
+    public static List<String> getStringListFromJsonArray(JSONArray jsonArray){
+
+
+        String[] auxString = new String[jsonArray.length()];
+
+        for(int i = 0; i<jsonArray.length();i++){
+            try {
+                auxString[i] = jsonArray.getString(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                auxString = null;
+                jsonArray = null;
+                return null;
+            }
+        }
+
+        return  new ArrayList<>(Arrays.asList(auxString));
     }
 
     public static List<String> getImagesFromArray(String s) {
@@ -112,9 +135,11 @@ public class Utils {
     public static List<CoupleParams> getSendOneObjectCouplePostParamList(Serializable object
             , String key) {
         List<CoupleParams> couplePostParamList = new ArrayList<>();
-        CoupleParams couplePostParam = new CoupleParams();
-        couplePostParam.setKey(key);
-        couplePostParam.setObject(object);
+
+        CoupleParams couplePostParam = new CoupleParams.CoupleParamBuilder(key).
+                nestedObject(object)
+                .createCoupleParam();
+
         couplePostParamList.add(couplePostParam);
         return couplePostParamList;
 
