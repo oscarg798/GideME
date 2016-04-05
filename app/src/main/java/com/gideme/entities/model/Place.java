@@ -72,18 +72,27 @@ public class Place implements IPlace {
                             .getString(R.string.latitude_key)));
 
 
-            auxJsonArray = jsonObject.getJSONArray(context.getString(R.string.photos_key));
-            photosList = new ArrayList<>();
-            for (int i = 0; i < auxJsonArray.length(); i++) {
-                auxJsonObject = auxJsonArray.getJSONObject(i);
-                photosList.add(auxJsonObject.getString(context.getString(R.string.photo_reference)));
+            if(Utils.jsonHasProperty(jsonObject.names(),context.getString(R.string.photos_key))){
+                auxJsonArray = jsonObject.getJSONArray(context.getString(R.string.photos_key));
+                photosList = new ArrayList<>();
+                for (int i = 0; i < auxJsonArray.length(); i++) {
+                    auxJsonObject = auxJsonArray.getJSONObject(i);
+                    photosList.add(auxJsonObject.getString(context.getString(R.string.photo_reference)));
+                }
+            }
+
+            float rating  = 0;
+
+            if(Utils.jsonHasProperty(jsonObject.names(),context.getString(R.string.rating_key))){
+                rating = Float.parseFloat(jsonObject
+                        .getString(context.getString(R.string.rating_key)));
             }
 
             placeDTO = new PlaceDTO.PlaceBuilder(jsonObject.getString(context.getString(R.string.name_key)),
                     jsonObject.getString(context.getString(R.string.reference_key)),
                     jsonObject.getString(context.getString(R.string.place_id_key)))
                     .nestedIconUrl(jsonObject.getString(context.getString(R.string.icon_key)))
-                    .nestedRating(Float.parseFloat(jsonObject.getString(context.getString(R.string.rating_key))))
+                    .nestedRating(rating)
                     .nestedLocationDTO(locationDTO)
                     .nestedPhotosReference(photosList)
                     .nestedTypes(Utils.getStringListFromJsonArray(jsonObject.getJSONArray(context

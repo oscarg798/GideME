@@ -61,12 +61,12 @@ public class Utils {
 
     }
 
-    public static List<String> getStringListFromJsonArray(JSONArray jsonArray){
+    public static List<String> getStringListFromJsonArray(JSONArray jsonArray) {
 
 
         String[] auxString = new String[jsonArray.length()];
 
-        for(int i = 0; i<jsonArray.length();i++){
+        for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 auxString[i] = jsonArray.getString(i);
             } catch (JSONException e) {
@@ -77,7 +77,23 @@ public class Utils {
             }
         }
 
-        return  new ArrayList<>(Arrays.asList(auxString));
+        return new ArrayList<>(Arrays.asList(auxString));
+    }
+
+    public static boolean jsonHasProperty(JSONArray namesArray, String property) {
+        try {
+            for (int i = 0; i < namesArray.length(); i++) {
+
+                if (namesArray.getString(i).equals(property)) {
+                    return true;
+                }
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return false;
+
     }
 
     public static List<String> getImagesFromArray(String s) {

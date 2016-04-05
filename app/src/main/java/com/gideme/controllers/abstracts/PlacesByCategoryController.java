@@ -6,6 +6,7 @@ import com.gideme.entities.dto.LocationDTO;
 import com.gideme.entities.dto.PlaceDTO;
 import com.gideme.entities.model.IPlacesByCategory;
 import com.gideme.entities.model.Place;
+import com.gideme.presentation.activities.MainActivity;
 
 import java.util.List;
 
@@ -33,15 +34,20 @@ public class PlacesByCategoryController extends AbstractController {
     }
 
     public void getPlacesByCategory(String category, String radius, LocationDTO locationDTO) {
+        showProgressDialog("Alerta", "Consultando sitios cercanos");
+
         Place.getInstance().getPlacesbyCategory(new IPlacesByCategory() {
             @Override
             public void getPlacesByCategorySuccess(List<PlaceDTO> placeDTOList) {
 
+                ((MainActivity) getActivity()).showPlacesByCategory(placeDTOList);
+                dismissProgressDialog();
             }
 
             @Override
             public void getPlacesByCategoryFail(String message) {
-
+                    showAlertDialogWithTwoCustomOnClickListener("Error", message);
+                    dismissProgressDialog();
             }
         }, category, radius, locationDTO, this.getActivity().getApplicationContext());
 
