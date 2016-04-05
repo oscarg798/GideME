@@ -10,12 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        card_view:cardCornerRadius="4dp">
+        android:weightSum="1.5"
+        card_view:cardCornerRadius="2dp">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:orientation="vertical"
             android:paddingBottom="10dp"
             android:paddingLeft="5dp"
@@ -24,11 +25,11 @@
 
             <ImageView
                 android:id="@+id/iv_category_icon"
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="0dp"
                 android:layout_gravity="center"
-                android:layout_weight="1"
-                android:scaleType="centerCrop"
+                android:layout_weight="1.3"
+                android:scaleType="fitXY"
                 android:src="@drawable/ic_launcher" />
 
 
@@ -37,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_gravity="center"
-                android:layout_weight="1"
+                android:layout_weight="0.2"
                 android:gravity="center"
                 android:text="Medium Text"
                 android:textAppearance="?android:attr/textAppearanceMedium"

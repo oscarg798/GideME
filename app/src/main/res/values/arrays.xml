@@ -8,8 +8,8 @@
     </string-array>
     <string-array name="airport">
         <item>@string/airport</item>
+        <item>airport</item>
         <item>https://maps.gstatic.com/mapfiles/place_api/icons/airport-71.png</item>
-        <item></item>
     </string-array>
     <string-array name="amusement_park">
         <item>@string/amusement_park</item>

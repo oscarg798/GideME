@@ -1,5 +1,6 @@
 package com.gideme.presentation.view_holders;
 
+import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,7 +11,7 @@ import com.gideme.R;
 /**
  * Created by ogallonr on 05/04/2016.
  */
-public class CategoryViewHolder extends RecyclerView.ViewHolder {
+public class CategoryViewHolder extends RecyclerView.ViewHolder implements RecyclerView.OnClickListener {
 
     private TextView txtCategoryName;
     private ImageView ivCategoryIcon;
@@ -25,6 +26,7 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder {
         return txtCategoryName;
     }
 
+
     private void setTxtCategoryName(TextView txtCategoryName) {
         this.txtCategoryName = txtCategoryName;
     }
@@ -35,5 +37,11 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder {
 
     private void setIvCategoryIcon(ImageView ivCategoryIcon) {
         this.ivCategoryIcon = ivCategoryIcon;
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        
     }
 }
