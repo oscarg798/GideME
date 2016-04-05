@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GideMe</string>
+    <string name="acept_label">Acept</string>
+    <string name="alert_label">Alert</string>
+</resources>

@@ -1,5 +1,6 @@
 package com.gideme.presentation.activities;
 
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,6 +18,7 @@ import com.gideme.entities.dto.LocationDTO;
 import com.gideme.entities.dto.PlaceDTO;
 import com.gideme.presentation.adapters.PlaceAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private  FloatingActionButton fab;
     private  Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initViewComponents(){
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -45,10 +47,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 final LocationDTO locationDTO = new LocationDTO(6.181851, -75.591253);
                 PlacesByCategoryController.getInstance(MainActivity.this)
-                        .getPlacesByCategory("bank","1000",locationDTO);
+                        .getPlacesByCategory("bank", "1000", locationDTO);
             }
         });
+
     }
+
 
     public void showPlacesByCategory(List<PlaceDTO> placeDTOList){
 
@@ -58,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLinearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        recyclerView.setLayoutManager(mLinearLayoutManager);
         PlaceAdapter placeAdapter = new PlaceAdapter(placeDTOList,getApplicationContext());
         recyclerView.setAdapter(placeAdapter);
     }

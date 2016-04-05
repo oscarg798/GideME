@@ -1,33 +1,52 @@
 <resources>
 
-    <string name="google_places_api_key">AIzaSyAi2W8KJdMj71vyzQcTy7kgXz9XjGyrkCU</string>
+    <string name="google_places_api_key" translatable="false">AIzaSyAi2W8KJdMj71vyzQcTy7kgXz9XjGyrkCU</string>
 
     <!--Keys-->
-    <string name="name_key">name</string>
-    <string name="formatted_address_key">formatted_address</string>
-    <string name="geometry_key">geometry</string>
-    <string name="location_key">location</string>
-    <string name="latitude_key">lat</string>
-    <string name="longitude_key">lng</string>
-    <string name="icon_key">icon</string>
-    <string name="photos_key">photos</string>
-    <string name="photo_reference">photo_reference</string>
-    <string name="place_id_key">place_id</string>
-    <string name="rating_key">rating</string>
-    <string name="reference_key">reference</string>
-    <string name="types_key">types</string>
-    <string name="access_points_key">access_points</string>
-    <string name="travel_modes_key">travel_modes</string>
-    <string name="radius_key">radius</string>
-    <string name="key_key">key</string>
-    <string name="result_key">results</string>
+    <string name="name_key" translatable="false">name</string>
+    <string name="formatted_address_key" translatable="false">formatted_address</string>
+    <string name="geometry_key" translatable="false">geometry</string>
+    <string name="location_key" translatable="false">location</string>
+    <string name="latitude_key" translatable="false">lat</string>
+    <string name="longitude_key" translatable="false">lng</string>
+    <string name="icon_key" translatable="false">icon</string>
+    <string name="photos_key" translatable="false">photos</string>
+    <string name="photo_reference" translatable="false">photo_reference</string>
+    <string name="place_id_key" translatable="false">place_id</string>
+    <string name="rating_key" translatable="false">rating</string>
+    <string name="reference_key" translatable="false">reference</string>
+    <string name="types_key" translatable="false">types</string>
+    <string name="access_points_key" translatable="false">access_points</string>
+    <string name="travel_modes_key" translatable="false">travel_modes</string>
+    <string name="radius_key" translatable="false">radius</string>
+    <string name="key_key" translatable="false">key</string>
+    <string name="result_key" translatable="false">results</string>
     <!--Keys End-->
 
     <!--URL-->
-    <string name="google_places_url">https://maps.googleapis.com/maps/api/place/nearbysearch/json</string>
+    <string name="google_places_url" translatable="false">https://maps.googleapis.com/maps/api/place/nearbysearch/json</string>
     <!--URL End-->
 
-    <string name="acept_label">Acceptar</string>
-    <string name="app_name">GideMe</string>
-    <string name="action_settings">Settings</string>
+    <!--Categories-->
+    <string name="accounting">accounting</string>
+    <string name="airport">airport</string>
+    <string name="amusement_park">amusement_park</string>
+    <string name="aquarium">aquarium</string>
+    <string name="art_gallery">art_gallery</string>
+    <string name="atm">atm</string>
+    <string name="bakery">bakery</string>
+    <string name="bank">bank</string>
+    <string name="bar">bar</string>
+    <string name="beauty_salon">beauty_salon</string>
+    <string name="bicycle_store">bicycle_store</string>
+    <string name="book_store">book_store</string>
+    <string name="bowling_alley">bowling_alley</string>
+    <string name="bus_station">bus_station</string>
+    <!--Categories End-->
+
+    <string name="acept_label">Aceptar</string>
+    <string name="app_name" translatable="false">GideMe</string>
+    <string name="action_settings" translatable="false">Settings</string>
+    <string name="alert_label">Alerta</string>
+    <string name="title_activity_categories">CategoriesActivity</string>
 </resources>

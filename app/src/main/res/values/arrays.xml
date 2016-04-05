@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="accounting">
+        <item>@string/accounting</item>
+        <item>accounting</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png</item>
+    </string-array>
+    <string-array name="airport">
+        <item>@string/airport</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/airport-71.png</item>
+        <item></item>
+    </string-array>
+    <string-array name="amusement_park">
+        <item>@string/amusement_park</item>
+        <item>amusement_park</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png</item>
+    </string-array>
+    <string-array name="aquarium">
+        <item>@string/aquarium</item>
+        <item>aquarium</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/aquarium-71.png</item>
+    </string-array>
+    <string-array name="atm">
+        <item>@string/atm</item>
+        <item>atm</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/atm-71.png</item>
+    </string-array>
+    <string-array name="bank">
+        <item>@string/bank</item>
+        <item>bank</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+
+
+    <array name="categories">
+        <item>@array/accounting</item>
+        <item>@array/airport</item>
+        <item>@array/amusement_park</item>
+        <item>@array/aquarium</item>
+        <item>@array/atm</item>
+        <item>@array/bank</item>
+    </array>
+
+</resources>
