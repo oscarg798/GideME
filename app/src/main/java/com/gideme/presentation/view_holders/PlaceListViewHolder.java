@@ -1,6 +1,5 @@
 package com.gideme.presentation.view_holders;
 
-import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,12 +12,13 @@ import com.gideme.R;
  */
 public class PlaceListViewHolder extends RecyclerView.ViewHolder {
     private TextView txtName;
-    private TextView txtType;
+    private TextView txtDistanceToPlace;
     private ImageView ivPlaceIcon;
+
     public PlaceListViewHolder(View itemView) {
         super(itemView);
         this.setTxtName((TextView) itemView.findViewById(R.id.txt_place_name));
-        this.setTxtType((TextView) itemView.findViewById(R.id.txt_place_type));
+        this.setTxtDistanceToPlace((TextView) itemView.findViewById(R.id.txt_distance_to_place));
         this.setIvPlaceIcon((ImageView) itemView.findViewById(R.id.iv_place_icon));
 
     }
@@ -31,12 +31,12 @@ public class PlaceListViewHolder extends RecyclerView.ViewHolder {
         this.txtName = txtName;
     }
 
-    public TextView getTxtType() {
-        return txtType;
+    public TextView getTxtDistanceToPlace() {
+        return txtDistanceToPlace;
     }
 
-    private void setTxtType(TextView txtType) {
-        this.txtType = txtType;
+    private void setTxtDistanceToPlace(TextView txtDistanceToPlace) {
+        this.txtDistanceToPlace = txtDistanceToPlace;
     }
 
     public ImageView getIvPlaceIcon() {

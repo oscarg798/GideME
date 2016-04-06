@@ -232,7 +232,7 @@ public class Place implements IPlace {
             public void errorResponse(String message, JSONObject jsonObject) {
                 placesByCategory.getPlacesByCategoryFail(message);
             }
-        }, coupleParams, "POST", true);
+        }, coupleParams, "GET", true);
 
         httpServices.execute(context.getString(R.string.google_places_url));
     }

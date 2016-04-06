@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.gideme.R;
 import com.gideme.entities.dto.PlaceDTO;
 import com.gideme.presentation.view_holders.PlaceListViewHolder;
+import com.gideme.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -35,13 +36,22 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceListViewHolder> {
 
     @Override
     public void onBindViewHolder(PlaceListViewHolder holder, int position) {
-            PlaceDTO placeDTO = this.placeDTOList.get(position);
-            holder.getTxtName().setText(placeDTO.getName());
-            holder.getTxtType().setText(placeDTO.getTypes().get(0));
-            if(placeDTO.getIconURL()!=null){
-                Picasso.with(context).load(placeDTO.getIconURL())
-                        .into(holder.getIvPlaceIcon());
-            }
+        PlaceDTO placeDTO = this.placeDTOList.get(position);
+        holder.getTxtName().setText(placeDTO.getName());
+
+        holder.getTxtDistanceToPlace().setText(String.format(context.getString(R.string.distance_label)
+                        + context.getString(R.string.two_poins)
+                        + context.getString(R.string.white_space)
+                        + context.getString(R.string.double_formater_key)
+                        + context.getString(R.string.kilometers_abreviation_label),
+                Utils.calculateDistanceBetweenTwoLocations(placeDTO.getLocationDTO()
+                                .getLat(), placeDTO.getLocationDTO().getLng(), 6.181851, -75.591253,
+                        Utils.KILOMETERS)));
+
+        if (placeDTO.getIconURL() != null) {
+            Picasso.with(context).load(placeDTO.getIconURL())
+                    .into(holder.getIvPlaceIcon());
+        }
     }
 
     @Override

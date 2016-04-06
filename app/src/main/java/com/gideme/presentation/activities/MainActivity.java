@@ -1,9 +1,7 @@
 package com.gideme.presentation.activities;
 
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +16,6 @@ import com.gideme.entities.dto.LocationDTO;
 import com.gideme.entities.dto.PlaceDTO;
 import com.gideme.presentation.adapters.PlaceAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,12 +23,14 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private  FloatingActionButton fab;
     private  Toolbar toolbar;
+    private PlacesByCategoryController placesByCategoryController;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        placesByCategoryController = new PlacesByCategoryController(this);
         initViewComponents();
     }
 
@@ -40,18 +39,17 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        final  String category = getIntent().getExtras().getString("category");
+        final LocationDTO locationDTO = new LocationDTO(6.181851, -75.591253);
+        placesByCategoryController
+                .getPlacesByCategory(category, "4000", locationDTO);
 
-        fab  = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final LocationDTO locationDTO = new LocationDTO(6.181851, -75.591253);
-                PlacesByCategoryController.getInstance(MainActivity.this)
-                        .getPlacesByCategory("bank", "1000", locationDTO);
-            }
-        });
+
 
     }
+
+
+
 
 
     public void showPlacesByCategory(List<PlaceDTO> placeDTOList){

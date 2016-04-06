@@ -3,4 +3,18 @@
     <string name="app_name">GideMe</string>
     <string name="acept_label">Acept</string>
     <string name="alert_label">Alert</string>
+    <string name="airport">Airport</string>
+    <string name="amusement_park">Amusement Park</string>
+    <string name="aquarium">Aquarium</string>
+    <string name="art_gallery">Art Gallery</string>
+    <string name="atm">ATM</string>
+    <string name="bakery">Bakery</string>
+    <string name="bank">Bank</string>
+    <string name="bar">Bar</string>
+    <string name="beauty_salon">Beauty Salon</string>
+    <string name="bicycle_store">Bicycle Store</string>
+    <string name="book_store">Book Store</string>
+    <string name="bowling_alley">Bowling Alley</string>
+    <string name="bus_station">Bus Station</string>
+    <string name="distance_label">Distance</string>
 </resources>

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GideME.iml" filepath="$PROJECT_DIR$/GideME.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GideMe.iml" filepath="$PROJECT_DIR$/GideMe.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/utilsandroid/utilsandroid.iml" filepath="$PROJECT_DIR$/utilsandroid/utilsandroid.iml" />
     </modules>
