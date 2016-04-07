@@ -15,23 +15,18 @@ import java.util.List;
  */
 public class PlacesByCategoryController extends AbstractController {
 
-    public static  PlacesByCategoryController instance;
+
 
     /**
      * Contructor de la clase
      *
      * @param activity actividad a la cual pertenece el controlador
      */
-    private  PlacesByCategoryController(Activity activity) {
+    public   PlacesByCategoryController(Activity activity) {
         super(activity);
     }
 
-    public static PlacesByCategoryController getInstance(Activity activity){
-        if(instance == null){
-            instance = new PlacesByCategoryController(activity);
-        }
-        return instance;
-    }
+
 
     public void getPlacesByCategory(String category, String radius, LocationDTO locationDTO) {
         showProgressDialog("Alerta", "Consultando sitios cercanos");

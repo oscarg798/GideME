@@ -9,7 +9,7 @@ public class CoupleParams {
     private final String param;
     private final Object object;
 
-    public CoupleParams(String key, String param, Object object) {
+    private CoupleParams(String key, String param, Object object) {
         this.key = key;
         this.param = param;
         this.object = object;

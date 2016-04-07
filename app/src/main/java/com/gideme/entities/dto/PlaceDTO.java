@@ -59,21 +59,15 @@ public class PlaceDTO {
     private List<String> travel_modes;
 
     /**
-     * Constructor de un lugar
-     * @param reference
-     * @param name
-     * @param iconURL
-     * @param placeID
-     * @param rating
-     * @param types
-     * @param locationDTO
-     * @param photosReference
-     * @param address
-     * @param travel_modes
+     * Distancia desde donde se calculo
+     * hasta el lugar
      */
-    public PlaceDTO(String reference, String name, String iconURL, String placeID, float rating,
-                    List<String> types, LocationDTO locationDTO,List<String>photosReference,
-                    String address, List<String> travel_modes) {
+    private double distanceFromUserLocationToPlace;
+
+    public PlaceDTO(String reference, String name, String iconURL, String placeID,
+                    float rating, List<String> types, LocationDTO locationDTO,
+                    List<String> photosReference, String address, List<String> travel_modes,
+                    double distanceFromUserLocationToPlace) {
         this.reference = reference;
         this.name = name;
         this.iconURL = iconURL;
@@ -84,6 +78,7 @@ public class PlaceDTO {
         this.photosReference = photosReference;
         this.address = address;
         this.travel_modes = travel_modes;
+        this.distanceFromUserLocationToPlace = distanceFromUserLocationToPlace;
     }
 
     public String getReference() {
@@ -134,6 +129,14 @@ public class PlaceDTO {
         this.travel_modes = travel_modes;
     }
 
+    public double getDistanceFromUserLocationToPlace() {
+        return distanceFromUserLocationToPlace;
+    }
+
+    public void setDistanceFromUserLocationToPlace(double distanceFromUserLocationToPlace) {
+        this.distanceFromUserLocationToPlace = distanceFromUserLocationToPlace;
+    }
+
     /**
      * Clase del patron Builder de un lugar
      */
@@ -149,7 +152,7 @@ public class PlaceDTO {
         private List<String>nestedPhotosReference;
         private String nestedAddress;
         private List<String> nestedTravelModes;
-
+        private double nestedDistanceFromUserLocationToPlace;
 
         /**
          * Contructor con los datos minimos necesesarios para contruir un lugar
@@ -214,6 +217,10 @@ public class PlaceDTO {
             return this;
         }
 
+        public PlaceBuilder nestedDistanceFromUserLocationToPlace(double nestedDistanceFromUserLocationToPlace){
+            this.nestedDistanceFromUserLocationToPlace = nestedDistanceFromUserLocationToPlace;
+            return this;
+        }
         /**
          * Metodo para contruir un lugar con las opciones ingresadas
          * @return el lugar contruido
@@ -221,7 +228,7 @@ public class PlaceDTO {
         public PlaceDTO createDTO() {
             return new PlaceDTO(nestedReference, nestedName, nestedIconURL,
                     nestedPlaceID, nestedRating, nestedTypes, nestedLocationDTO,
-                    nestedPhotosReference, nestedAddress, nestedTravelModes);
+                    nestedPhotosReference, nestedAddress, nestedTravelModes, nestedDistanceFromUserLocationToPlace);
         }
 
 

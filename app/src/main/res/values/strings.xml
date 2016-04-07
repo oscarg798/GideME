@@ -23,30 +23,38 @@
     <string name="result_key" translatable="false">results</string>
     <!--Keys End-->
 
+    <!--UTILS-->
+    <string name="double_formater_key" formatted="false" translatable="false">%f%n</string>
+    <string name="two_poins" translatable="false">:</string>
+    <string name="white_space" translatable="false"> </string>
+    <!--Utils END-->
+
     <!--URL-->
     <string name="google_places_url" translatable="false">https://maps.googleapis.com/maps/api/place/nearbysearch/json</string>
     <!--URL End-->
 
     <!--Categories-->
     <string name="accounting">accounting</string>
-    <string name="airport">airport</string>
+    <string name="airport">Aeropuerto</string>
     <string name="amusement_park">amusement_park</string>
-    <string name="aquarium">aquarium</string>
-    <string name="art_gallery">art_gallery</string>
-    <string name="atm">atm</string>
+    <string name="aquarium">Acuario</string>
+    <string name="art_gallery">Galeria de Arte</string>
+    <string name="atm">Cajero</string>
     <string name="bakery">bakery</string>
-    <string name="bank">bank</string>
-    <string name="bar">bar</string>
-    <string name="beauty_salon">beauty_salon</string>
-    <string name="bicycle_store">bicycle_store</string>
-    <string name="book_store">book_store</string>
-    <string name="bowling_alley">bowling_alley</string>
-    <string name="bus_station">bus_station</string>
+    <string name="bank">Banco</string>
+    <string name="bar">Bar</string>
+    <string name="beauty_salon">Peluqueria</string>
+    <string name="bicycle_store">Tienda de Bicicletas</string>
+    <string name="book_store">Tienda de Libros</string>
+    <string name="bowling_alley">Bolera</string>
+    <string name="bus_station">Estación de Bus</string>
     <!--Categories End-->
 
+    <string name="kilometers_abreviation_label" translatable="false">KM</string>
+    <string name="distance_label">Distancia</string>
     <string name="acept_label">Aceptar</string>
     <string name="app_name" translatable="false">GideMe</string>
     <string name="action_settings" translatable="false">Settings</string>
     <string name="alert_label">Alerta</string>
-    <string name="title_activity_categories">CategoriesActivity</string>
+    <string name="title_activity_categories" translatable="false">CategoriesActivity</string>
 </resources>
