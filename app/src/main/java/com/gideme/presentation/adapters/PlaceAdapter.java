@@ -44,9 +44,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceListViewHolder> {
                         + context.getString(R.string.white_space)
                         + context.getString(R.string.double_formater_key)
                         + context.getString(R.string.kilometers_abreviation_label),
-                Utils.calculateDistanceBetweenTwoLocations(placeDTO.getLocationDTO()
-                                .getLat(), placeDTO.getLocationDTO().getLng(), 6.181851, -75.591253,
-                        Utils.KILOMETERS)));
+                placeDTO.getDistanceFromUserLocationToPlace()));
 
         if (placeDTO.getIconURL() != null) {
             Picasso.with(context).load(placeDTO.getIconURL())

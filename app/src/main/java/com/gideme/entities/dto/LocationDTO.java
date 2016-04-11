@@ -1,11 +1,13 @@
 package com.gideme.entities.dto;
 
+import java.io.Serializable;
+
 /**
  * Created by oscargallon on 4/4/16.
  * Clase para referenciar un objeto
  * que hace referencia a la latitud y longitud
  */
-public class LocationDTO {
+public class LocationDTO  implements Serializable{
 
     /**
      * Latitud

@@ -21,6 +21,8 @@
     <string name="radius_key" translatable="false">radius</string>
     <string name="key_key" translatable="false">key</string>
     <string name="result_key" translatable="false">results</string>
+    <string name="place_key" translatable="false">place</string>
+    <string name="category_key" translatable="false">category</string>
     <!--Keys End-->
 
     <!--UTILS-->
@@ -31,6 +33,7 @@
 
     <!--URL-->
     <string name="google_places_url" translatable="false">https://maps.googleapis.com/maps/api/place/nearbysearch/json</string>
+    <string name="google_places_photos_url" translatable="false">https://maps.googleapis.com/maps/api/place/photo</string>
     <!--URL End-->
 
     <!--Categories-->
@@ -57,4 +60,7 @@
     <string name="action_settings" translatable="false">Settings</string>
     <string name="alert_label">Alerta</string>
     <string name="title_activity_categories" translatable="false">CategoriesActivity</string>
+    <string name="title_activity_place_detail">PlaceDetailActivity</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
 </resources>

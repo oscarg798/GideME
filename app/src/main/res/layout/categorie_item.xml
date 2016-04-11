@@ -19,14 +19,12 @@
             android:layout_height="150dp"
             android:orientation="vertical"
             android:paddingBottom="10dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
             android:paddingTop="10dp">
 
             <ImageView
                 android:id="@+id/iv_category_icon"
-                android:layout_width="150dp"
-                android:layout_height="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="1.3dp"
                 android:layout_gravity="center"
                 android:layout_weight="1.3"
                 android:scaleType="fitXY"
@@ -39,7 +37,7 @@
                 android:layout_height="0dp"
                 android:layout_gravity="center"
                 android:layout_weight="0.2"
-                   android:gravity="center"
+                android:gravity="center"
                 android:text="Medium"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textSize="16sp"

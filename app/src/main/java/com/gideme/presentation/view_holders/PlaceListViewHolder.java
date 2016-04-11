@@ -14,12 +14,14 @@ public class PlaceListViewHolder extends RecyclerView.ViewHolder {
     private TextView txtName;
     private TextView txtDistanceToPlace;
     private ImageView ivPlaceIcon;
+    private ImageView ivGoToPlaceDetails;
 
     public PlaceListViewHolder(View itemView) {
         super(itemView);
         this.setTxtName((TextView) itemView.findViewById(R.id.txt_place_name));
         this.setTxtDistanceToPlace((TextView) itemView.findViewById(R.id.txt_distance_to_place));
         this.setIvPlaceIcon((ImageView) itemView.findViewById(R.id.iv_place_icon));
+        this.setIvGoToPlaceDetails((ImageView) itemView.findViewById(R.id.iv_go_to_place_detail));
 
     }
 
@@ -45,5 +47,13 @@ public class PlaceListViewHolder extends RecyclerView.ViewHolder {
 
     private void setIvPlaceIcon(ImageView ivPlaceIcon) {
         this.ivPlaceIcon = ivPlaceIcon;
+    }
+
+    public ImageView getIvGoToPlaceDetails() {
+        return ivGoToPlaceDetails;
+    }
+
+    public void setIvGoToPlaceDetails(ImageView ivGoToPlaceDetails) {
+        this.ivGoToPlaceDetails = ivGoToPlaceDetails;
     }
 }

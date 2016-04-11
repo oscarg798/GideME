@@ -9,21 +9,28 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.gideme.R;
 import com.gideme.controllers.abstracts.PlacesByCategoryController;
 import com.gideme.entities.dto.LocationDTO;
 import com.gideme.entities.dto.PlaceDTO;
+import com.gideme.entities.model.Place;
+import com.gideme.entities.utils.CoupleParams;
 import com.gideme.presentation.adapters.PlaceAdapter;
+import com.gideme.presentation.listeners.RecyclerItemOnClickListener;
+import com.gideme.presentation.listeners.interfaces.OnItemClickListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private  FloatingActionButton fab;
-    private  Toolbar toolbar;
+    private FloatingActionButton fab;
+    private Toolbar toolbar;
     private PlacesByCategoryController placesByCategoryController;
+    final LocationDTO locationDTO = new LocationDTO(6.181851, -75.591253);
 
 
     @Override
@@ -34,33 +41,48 @@ public class MainActivity extends AppCompatActivity {
         initViewComponents();
     }
 
-    public void initViewComponents(){
+    public void initViewComponents() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        final  String category = getIntent().getExtras().getString("category");
-        final LocationDTO locationDTO = new LocationDTO(6.181851, -75.591253);
+        final String category = getIntent().getExtras().getString(getApplicationContext()
+                .getString(R.string.category_key));
+
         placesByCategoryController
                 .getPlacesByCategory(category, "4000", locationDTO);
-
 
 
     }
 
 
-
-
-
-    public void showPlacesByCategory(List<PlaceDTO> placeDTOList){
+    public void showPlacesByCategory(final List<PlaceDTO> placeDTOList) {
 
         LinearLayoutManager mLinearLayoutManager;
         mLinearLayoutManager = new LinearLayoutManager(this);
 
+        Place.getInstance().orderPlaceListByDistanceToUserLocation(placeDTOList,
+                locationDTO);
+
+
         recyclerView.setLayoutManager(mLinearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        PlaceAdapter placeAdapter = new PlaceAdapter(placeDTOList,getApplicationContext());
+        recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(),
+                new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        List<CoupleParams> coupleParamsList =
+                                new ArrayList<>();
+                        coupleParamsList.add(new CoupleParams.CoupleParamBuilder(getApplicationContext()
+                                .getString(R.string.place_key)).nestedObject(placeDTOList.get(position))
+                                .createCoupleParam());
+                        placesByCategoryController.changeActivity(PlaceDetailActivity.class,
+                                coupleParamsList);
+                    }
+                }));
+
+        PlaceAdapter placeAdapter = new PlaceAdapter(placeDTOList, getApplicationContext());
         recyclerView.setAdapter(placeAdapter);
     }
 

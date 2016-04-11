@@ -44,7 +44,7 @@ public class AbstractController {
 
     }
 
-    public void showProgressDialog(String title, String message, boolean cancelable){
+    public void showProgressDialog(String title, String message, boolean cancelable) {
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(cancelable);
         progressDialog.setTitle(title);
@@ -75,23 +75,28 @@ public class AbstractController {
         progressDialog.dismiss();
     }
 
+
+    public void changeActivity(Class<?> destinyClass) {
+        Intent i = new Intent(getActivity(), destinyClass);
+        getActivity().startActivity(i);
+
+    }
+
     /**
      * Metodo que cambia de actividad
      *
      * @param destinyClass        clase da la actividad de destino
      * @param couplePostParamList parametros a enviar
      */
-    public void changeActivityWithExtrasList(Class<?> destinyClass, List<CoupleParams> couplePostParamList) {
+    public void changeActivity(Class<?> destinyClass, List<CoupleParams> couplePostParamList) {
         Intent i = new Intent(getActivity(), destinyClass);
-        if (couplePostParamList != null) {
-            for (CoupleParams couplePostParam : couplePostParamList) {
-                if (couplePostParam.getObject() == null) {
-                    i.putExtra(couplePostParam.getKey(), couplePostParam.getParam());
-                } else {
-                    i.putExtra(couplePostParam.getKey(), (Serializable) couplePostParam.getObject());
-                }
-
+        for (CoupleParams couplePostParam : couplePostParamList) {
+            if (couplePostParam.getObject() == null) {
+                i.putExtra(couplePostParam.getKey(), couplePostParam.getParam());
+            } else {
+                i.putExtra(couplePostParam.getKey(), (Serializable) couplePostParam.getObject());
             }
+
         }
         getActivity().startActivity(i);
     }
@@ -131,7 +136,7 @@ public class AbstractController {
 
     public void showAlertDialogWithTwoCustomOnClickListener(String title, String message,
                                                             DialogInterface.OnClickListener onCLickListenerPositiveButton,
-                                                            String postiveButtonTitle){
+                                                            String postiveButtonTitle) {
 
         /**
          * Creamos el dialogo

@@ -1,11 +1,12 @@
 package com.gideme.entities.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by oscargallon on 4/4/16.
  */
-public class PlaceDTO {
+public class PlaceDTO implements Serializable {
 
     /**
      * Referencia del lugar sirve para obtener mas información
@@ -140,7 +141,7 @@ public class PlaceDTO {
     /**
      * Clase del patron Builder de un lugar
      */
-    public static class PlaceBuilder {
+    public static class PlaceBuilder  {
 
         private String nestedReference;
         private String nestedName;

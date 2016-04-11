@@ -16,6 +16,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,7 +33,7 @@ public class Place implements IPlace {
 
     private final String JSON_ARRAY_FORMAT_ERROR = "error en el formato";
 
-    private final String CAN_NOT_GET_PLACES_ERROR= "No se obtuvieron lugares";
+    private final String CAN_NOT_GET_PLACES_ERROR = "No se obtuvieron lugares";
 
     /**
      * Contructor privado por ser singleton
@@ -62,17 +64,17 @@ public class Place implements IPlace {
         JSONObject auxJsonObject = null;
         JSONArray auxJsonArray = null;
         List<String> photosList = null;
-        String [] auxStringArray = null;
+        String[] auxStringArray = null;
         try {
 
             LocationDTO locationDTO = new LocationDTO(jsonObject.getJSONObject(context.getString(R.string.geometry_key))
                     .getJSONObject(context.getString(R.string.location_key)).getDouble(context
-                            .getString(R.string.latitude_key)),jsonObject.getJSONObject(context.getString(R.string.geometry_key))
+                            .getString(R.string.latitude_key)), jsonObject.getJSONObject(context.getString(R.string.geometry_key))
                     .getJSONObject(context.getString(R.string.location_key)).getDouble(context
-                            .getString(R.string.latitude_key)));
+                            .getString(R.string.longitude_key)));
 
 
-            if(Utils.jsonHasProperty(jsonObject.names(),context.getString(R.string.photos_key))){
+            if (Utils.jsonHasProperty(jsonObject.names(), context.getString(R.string.photos_key))) {
                 auxJsonArray = jsonObject.getJSONArray(context.getString(R.string.photos_key));
                 photosList = new ArrayList<>();
                 for (int i = 0; i < auxJsonArray.length(); i++) {
@@ -81,9 +83,9 @@ public class Place implements IPlace {
                 }
             }
 
-            float rating  = 0;
+            float rating = 0;
 
-            if(Utils.jsonHasProperty(jsonObject.names(),context.getString(R.string.rating_key))){
+            if (Utils.jsonHasProperty(jsonObject.names(), context.getString(R.string.rating_key))) {
                 rating = Float.parseFloat(jsonObject
                         .getString(context.getString(R.string.rating_key)));
             }
@@ -161,27 +163,41 @@ public class Place implements IPlace {
         return placeDTOList;
     }
 
+    @Override
+    public void addPhotoUrlToPlace(JSONArray jsonArray, Context context) {
+        JSONObject placeDTOJsonObject = null;
+        try {
+            placeDTOJsonObject = jsonArray.getJSONObject(0);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            placeDTOJsonObject = null;
+            jsonArray = null;
+        }
+    }
+
     /**
      * Callback de exito del metodo que obtiene los
      * lugares por categoria
-     * @param response respuesta del servicio
+     *
+     * @param response         respuesta del servicio
      * @param placesByCategory promesas a llamar
-     * @param context contexto de la aplicación
+     * @param context          contexto de la aplicación
      */
     private void getPlacesByCategorySucces(String response, IPlacesByCategory placesByCategory,
-                                           Context context){
+                                           Context context) {
 
         try {
-            JSONObject auxJsonObject  = new JSONObject(response);
+            JSONObject auxJsonObject = new JSONObject(response);
             JSONArray auxJsonArray = auxJsonObject.getJSONArray(context.getString(R.string.result_key));
-            if(auxJsonArray!=null){
-                    List<PlaceDTO> placeDTOList = getPlacesFromJsonArray(auxJsonArray, context);
-                    if(placeDTOList!=null){
-                        placesByCategory.getPlacesByCategorySuccess(placeDTOList);
-                    }else{
-                        placesByCategory.getPlacesByCategoryFail(CAN_NOT_GET_PLACES_ERROR);
-                    }
-            }else{
+            if (auxJsonArray != null) {
+                List<PlaceDTO> placeDTOList = getPlacesFromJsonArray(auxJsonArray, context);
+                if (placeDTOList != null) {
+                    placesByCategory.getPlacesByCategorySuccess(placeDTOList);
+                } else {
+                    placesByCategory.getPlacesByCategoryFail(CAN_NOT_GET_PLACES_ERROR);
+                }
+            } else {
                 placesByCategory.getPlacesByCategoryFail(JSON_ARRAY_FORMAT_ERROR);
             }
         } catch (JSONException e) {
@@ -193,7 +209,7 @@ public class Place implements IPlace {
     }
 
     @Override
-    public void getPlacesbyCategory(final IPlacesByCategory placesByCategory,final String category,
+    public void getPlacesbyCategory(final IPlacesByCategory placesByCategory, final String category,
                                     final String radius, final LocationDTO locationDTO,
                                     final Context context) {
 
@@ -201,7 +217,7 @@ public class Place implements IPlace {
         List<CoupleParams> coupleParams = new ArrayList<>();
 
         auxCoupleParam = new CoupleParams.CoupleParamBuilder(context.getString(R.string.location_key))
-                .nestedParam(locationDTO.getLat()+","+locationDTO.getLng())
+                .nestedParam(locationDTO.getLat() + "," + locationDTO.getLng())
                 .createCoupleParam();
         coupleParams.add(auxCoupleParam);
 
@@ -225,7 +241,7 @@ public class Place implements IPlace {
         HTTPServices httpServices = new HTTPServices(new IHTTPServices() {
             @Override
             public void successFullResponse(String response) {
-                    getPlacesByCategorySucces(response, placesByCategory, context);
+                getPlacesByCategorySucces(response, placesByCategory, context);
             }
 
             @Override
@@ -235,5 +251,19 @@ public class Place implements IPlace {
         }, coupleParams, "GET", true);
 
         httpServices.execute(context.getString(R.string.google_places_url));
+    }
+
+    @Override
+    public void orderPlaceListByDistanceToUserLocation(List<PlaceDTO> placeDTOList,
+                                                       LocationDTO userLocation) {
+        for (PlaceDTO place : placeDTOList) {
+            place.setDistanceFromUserLocationToPlace(Utils.
+                    calculateDistanceBetweenTwoLocations(place.getLocationDTO().getLat(),
+                            place.getLocationDTO().getLng(), userLocation.getLat(),
+                            userLocation.getLng(), Utils.KILOMETERS));
+
+
+        }
+        Collections.sort(placeDTOList, new PlaceComparator());
     }
 }

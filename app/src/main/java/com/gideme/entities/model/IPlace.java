@@ -45,6 +45,8 @@ public interface IPlace {
      */
     List<PlaceDTO> getPlacesFromJsonArray(JSONArray jsonArray, Context context);
 
+    void addPhotoUrlToPlace(JSONArray jsonArray, Context context);
+
     /**
      * Metodo para obtener los lugares por categoria
      * @param placesByCategory callback para llamar en caso
@@ -52,5 +54,7 @@ public interface IPlace {
      */
     void getPlacesbyCategory(IPlacesByCategory placesByCategory,String category, String radius
                              , LocationDTO locationDTO, Context context);
+
+    void orderPlaceListByDistanceToUserLocation(List<PlaceDTO> placeDTOList, LocationDTO userLocation);
 
 }

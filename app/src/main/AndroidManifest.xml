@@ -19,7 +19,7 @@
             android:name=".presentation.activities.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".presentation.activities.CategoriesActivity"
             android:label="@string/app_name"
@@ -32,8 +32,14 @@
             </intent-filter>
             s
         </activity>
-
-
+        <activity
+            android:name=".presentation.activities.PlaceDetailActivity"
+            android:label="@string/title_activity_place_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".presentation.activities.Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

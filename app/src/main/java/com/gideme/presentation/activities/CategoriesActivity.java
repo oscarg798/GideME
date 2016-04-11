@@ -67,14 +67,17 @@ public class CategoriesActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         CategoriesAdapter categoriesAdapter = new CategoriesAdapter(categoriesList, getApplicationContext());
         recyclerView.setAdapter(categoriesAdapter);
+
+
         recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position){
                 CategoryDTO categoryDTO = categoriesList.get(position);
                 List<CoupleParams> coupleParamses = new ArrayList<CoupleParams>();
-              coupleParamses.add(new CoupleParams.CoupleParamBuilder("category")
+              coupleParamses.add(new CoupleParams.CoupleParamBuilder(getApplicationContext()
+              .getString(R.string.category_key))
                       .nestedParam(categoryDTO.getCategoryKey()).createCoupleParam());
-                categoriesController.changeActivityWithExtrasList(MainActivity.class, coupleParamses);
+                categoriesController.changeActivity(MainActivity.class, coupleParamses);
             }
         }));
 

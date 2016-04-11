@@ -36,6 +36,11 @@ public class Utils {
     public static final String METER="M";
     public static final String KILOMETERS = "K";
     public static final String NAUTICAL_METER = "N";
+    public static final String MAX_WIDTH = "maxwidth=600";
+    public static final String AMPERSAND = "&";
+    public static final String REFERENCE= "photoreference=";
+    public static final String APIKEY = "key=";
+    public static final String INTERROGATION__SYMBOL="?";
 
     public static String organizePostServicesParametres(List<CoupleParams> couplePostParams) {
 

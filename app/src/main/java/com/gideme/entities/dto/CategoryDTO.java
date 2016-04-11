@@ -1,9 +1,11 @@
 package com.gideme.entities.dto;
 
+import java.io.Serializable;
+
 /**
  * Created by ogallonr on 05/04/2016.
  */
-public class CategoryDTO {
+public class CategoryDTO  implements Serializable{
 
     private final String name;
     private final String categoryKey;
