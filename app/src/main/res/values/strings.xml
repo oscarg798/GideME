@@ -20,9 +20,11 @@
     <string name="travel_modes_key" translatable="false">travel_modes</string>
     <string name="radius_key" translatable="false">radius</string>
     <string name="key_key" translatable="false">key</string>
-    <string name="result_key" translatable="false">results</string>
+    <string name="results_key" translatable="false">results</string>
+    <string name="result_key" translatable="false">result</string>
     <string name="place_key" translatable="false">place</string>
     <string name="category_key" translatable="false">category</string>
+    <string name="international_phone_number_key" translatable="false">international_phone_number</string>
     <!--Keys End-->
 
     <!--UTILS-->
@@ -34,6 +36,7 @@
     <!--URL-->
     <string name="google_places_url" translatable="false">https://maps.googleapis.com/maps/api/place/nearbysearch/json</string>
     <string name="google_places_photos_url" translatable="false">https://maps.googleapis.com/maps/api/place/photo</string>
+    <string name="google_places_detail_url" translatable="false">https://maps.googleapis.com/maps/api/place/details/json</string>
     <!--URL End-->
 
     <!--Categories-->
@@ -53,6 +56,15 @@
     <string name="bus_station">Estación de Bus</string>
     <!--Categories End-->
 
+    <!--Labels-->
+    <string name="place_name">Nombre:</string>
+    <string name="place_phone_number">Telefono:</string>
+    <string name="place_address">Dirección:</string>
+    <string name="not_avaliable">No Disponible</string>
+
+    <!--Labels END-->
+
+
     <string name="kilometers_abreviation_label" translatable="false">KM</string>
     <string name="distance_label">Distancia</string>
     <string name="acept_label">Aceptar</string>
@@ -62,5 +74,8 @@
     <string name="title_activity_categories" translatable="false">CategoriesActivity</string>
     <string name="title_activity_place_detail">PlaceDetailActivity</string>
     <string name="title_activity_main2">Main2Activity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

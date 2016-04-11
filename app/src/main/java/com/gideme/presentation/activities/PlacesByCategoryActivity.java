@@ -9,10 +9,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 
 import com.gideme.R;
-import com.gideme.controllers.abstracts.PlacesByCategoryController;
+import com.gideme.controllers.PlacesByCategoryController;
 import com.gideme.entities.dto.LocationDTO;
 import com.gideme.entities.dto.PlaceDTO;
 import com.gideme.entities.model.Place;
@@ -24,7 +23,7 @@ import com.gideme.presentation.listeners.interfaces.OnItemClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class PlacesByCategoryActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private FloatingActionButton fab;

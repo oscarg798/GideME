@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.gideme.R;
-import com.gideme.controllers.abstracts.CategoryController;
+import com.gideme.controllers.CategoryController;
 import com.gideme.entities.dto.CategoryDTO;
 import com.gideme.entities.utils.CoupleParams;
 import com.gideme.presentation.adapters.CategoriesAdapter;
@@ -77,7 +77,7 @@ public class CategoriesActivity extends AppCompatActivity {
               coupleParamses.add(new CoupleParams.CoupleParamBuilder(getApplicationContext()
               .getString(R.string.category_key))
                       .nestedParam(categoryDTO.getCategoryKey()).createCoupleParam());
-                categoriesController.changeActivity(MainActivity.class, coupleParamses);
+                categoriesController.changeActivity(PlacesByCategoryActivity.class, coupleParamses);
             }
         }));
 

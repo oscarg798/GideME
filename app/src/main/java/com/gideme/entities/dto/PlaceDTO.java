@@ -59,6 +59,8 @@ public class PlaceDTO implements Serializable {
      */
     private List<String> travel_modes;
 
+    private String phoneNumber;
+
     /**
      * Distancia desde donde se calculo
      * hasta el lugar
@@ -68,6 +70,7 @@ public class PlaceDTO implements Serializable {
     public PlaceDTO(String reference, String name, String iconURL, String placeID,
                     float rating, List<String> types, LocationDTO locationDTO,
                     List<String> photosReference, String address, List<String> travel_modes,
+                    String phoneNumber,
                     double distanceFromUserLocationToPlace) {
         this.reference = reference;
         this.name = name;
@@ -79,6 +82,7 @@ public class PlaceDTO implements Serializable {
         this.photosReference = photosReference;
         this.address = address;
         this.travel_modes = travel_modes;
+        this.phoneNumber = phoneNumber;
         this.distanceFromUserLocationToPlace = distanceFromUserLocationToPlace;
     }
 
@@ -134,6 +138,14 @@ public class PlaceDTO implements Serializable {
         return distanceFromUserLocationToPlace;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     public void setDistanceFromUserLocationToPlace(double distanceFromUserLocationToPlace) {
         this.distanceFromUserLocationToPlace = distanceFromUserLocationToPlace;
     }
@@ -141,7 +153,7 @@ public class PlaceDTO implements Serializable {
     /**
      * Clase del patron Builder de un lugar
      */
-    public static class PlaceBuilder  {
+    public static class PlaceBuilder {
 
         private String nestedReference;
         private String nestedName;
@@ -150,16 +162,18 @@ public class PlaceDTO implements Serializable {
         private float nestedRating;
         private List<String> nestedTypes;
         private LocationDTO nestedLocationDTO;
-        private List<String>nestedPhotosReference;
+        private List<String> nestedPhotosReference;
         private String nestedAddress;
         private List<String> nestedTravelModes;
         private double nestedDistanceFromUserLocationToPlace;
+        private String nestedPhoneNumber;
 
         /**
          * Contructor con los datos minimos necesesarios para contruir un lugar
-         * @param nestedName nombre del lugar
+         *
+         * @param nestedName      nombre del lugar
          * @param nestedReference referencia lugar
-         * @param nestedPlaceID ID del lugar
+         * @param nestedPlaceID   ID del lugar
          */
         public PlaceBuilder(String nestedName, String nestedReference, String nestedPlaceID) {
             this.nestedName = nestedName;
@@ -203,7 +217,7 @@ public class PlaceDTO implements Serializable {
             return this;
         }
 
-        public PlaceBuilder nestedPhotosReference(List<String>nestedPhotosReference) {
+        public PlaceBuilder nestedPhotosReference(List<String> nestedPhotosReference) {
             this.nestedPhotosReference = nestedPhotosReference;
             return this;
         }
@@ -218,18 +232,26 @@ public class PlaceDTO implements Serializable {
             return this;
         }
 
-        public PlaceBuilder nestedDistanceFromUserLocationToPlace(double nestedDistanceFromUserLocationToPlace){
+        public PlaceBuilder nestedDistanceFromUserLocationToPlace(double nestedDistanceFromUserLocationToPlace) {
             this.nestedDistanceFromUserLocationToPlace = nestedDistanceFromUserLocationToPlace;
             return this;
         }
+
+        public PlaceBuilder nestedPhoneNumber(String nestedPhoneNumber) {
+            this.nestedPhoneNumber = nestedPhoneNumber;
+            return this;
+        }
+
         /**
          * Metodo para contruir un lugar con las opciones ingresadas
+         *
          * @return el lugar contruido
          */
         public PlaceDTO createDTO() {
             return new PlaceDTO(nestedReference, nestedName, nestedIconURL,
                     nestedPlaceID, nestedRating, nestedTypes, nestedLocationDTO,
-                    nestedPhotosReference, nestedAddress, nestedTravelModes, nestedDistanceFromUserLocationToPlace);
+                    nestedPhotosReference, nestedAddress, nestedTravelModes,
+                    nestedPhoneNumber, nestedDistanceFromUserLocationToPlace);
         }
 
 

@@ -1,11 +1,13 @@
-package com.gideme.controllers.abstracts;
+package com.gideme.controllers;
 
 import android.app.Activity;
+
+import com.gideme.controllers.abstracts.AbstractController;
 
 /**
  * Created by ogallonr on 06/04/2016.
  */
-public class CategoryController extends AbstractController{
+public class CategoryController extends AbstractController {
     /**
      * Contructor de la clase
      *

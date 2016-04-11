@@ -35,6 +35,8 @@ public class Place implements IPlace {
 
     private final String CAN_NOT_GET_PLACES_ERROR = "No se obtuvieron lugares";
 
+    private final String ADD_PLACE_INFORMATION_ERROR = "No se pudo agregar información al lugar";
+
     /**
      * Contructor privado por ser singleton
      */
@@ -121,20 +123,44 @@ public class Place implements IPlace {
     @Override
     public PlaceDTO addInformationToPlaceDTO(JSONObject jsonObject, Context context, PlaceDTO placeDTO) {
         JSONArray auxJsonArray = null;
+        List<String> travelModes = null;
         try {
+            jsonObject = jsonObject.getJSONObject(context
+                    .getString(R.string.result_key));
+
             placeDTO.setAddress(jsonObject.getString(context.getString(R.string.formatted_address_key)));
-            auxJsonArray = jsonObject.getJSONObject(context.getString(R.string.geometry_key)).getJSONArray(context.getString(R.string.access_points_key));
-            if (auxJsonArray != null && auxJsonArray.length() > 0) {
-                placeDTO.setTravel_modes(new ArrayList<>
-                        (Arrays.asList((String[]) auxJsonArray.getJSONObject(0)
-                                .get(context.getString(R.string.travel_modes_key)))));
+
+
+            if (Utils.jsonHasProperty(jsonObject.names(),
+                    context.getString(R.string.international_phone_number_key))) {
+                placeDTO.setPhoneNumber(jsonObject.getString(context
+                        .getString(R.string.international_phone_number_key)));
             }
+
+            if (Utils.jsonHasProperty(jsonObject.names(), context.getString(R.string.geometry_key))
+                    && Utils.jsonHasProperty(jsonObject.getJSONObject(context.getString(R.string.geometry_key))
+                    .names(), context.getString(R.string.travel_modes_key))) {
+
+                auxJsonArray = jsonObject.getJSONObject(context.getString(R.string.geometry_key)).getJSONArray(context.getString(R.string.access_points_key));
+
+
+                if (auxJsonArray != null && auxJsonArray.length() > 0) {
+                    travelModes = new ArrayList<>();
+
+                    for (int i = 0; i < auxJsonArray.length(); i++) {
+                        travelModes.add(auxJsonArray.getString(i));
+                    }
+                    placeDTO.setTravel_modes(travelModes);
+                }
+            }
+
 
         } catch (JSONException e) {
             e.printStackTrace();
 
         }
 
+        travelModes = null;
         auxJsonArray = null;
         return placeDTO;
     }
@@ -189,7 +215,7 @@ public class Place implements IPlace {
 
         try {
             JSONObject auxJsonObject = new JSONObject(response);
-            JSONArray auxJsonArray = auxJsonObject.getJSONArray(context.getString(R.string.result_key));
+            JSONArray auxJsonArray = auxJsonObject.getJSONArray(context.getString(R.string.results_key));
             if (auxJsonArray != null) {
                 List<PlaceDTO> placeDTOList = getPlacesFromJsonArray(auxJsonArray, context);
                 if (placeDTOList != null) {
@@ -265,5 +291,51 @@ public class Place implements IPlace {
 
         }
         Collections.sort(placeDTOList, new PlaceComparator());
+    }
+
+
+    private void getPlaceInformationSuccess(PlaceDTO placeDTO, IPlaceInformation iPlaceInformation,
+                                            String response, Context context) {
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(response);
+            addInformationToPlaceDTO(jsonObject, context, placeDTO);
+            iPlaceInformation.getPlaceInformationSuccess(placeDTO);
+        } catch (JSONException e) {
+            jsonObject = null;
+            response = null;
+            iPlaceInformation.getPlaceInformationFail(placeDTO, ADD_PLACE_INFORMATION_ERROR);
+
+        }
+
+    }
+
+    @Override
+    public void getPlaceInformation(final PlaceDTO placeDTO, final IPlaceInformation iPlaceInformation,
+                                    final Context context) {
+
+        List<CoupleParams> coupleParamsList = new ArrayList<>();
+
+        coupleParamsList.add(new CoupleParams.CoupleParamBuilder(context.getString(R.string.reference_key))
+                .nestedParam(placeDTO.getReference()).createCoupleParam());
+
+        coupleParamsList.add(new CoupleParams.CoupleParamBuilder(context.getString(R.string.key_key))
+                .nestedParam(context.getString(R.string.google_places_api_key)).createCoupleParam());
+
+        HTTPServices httpServices = new HTTPServices(new IHTTPServices() {
+            @Override
+            public void successFullResponse(String response) {
+                getPlaceInformationSuccess(placeDTO, iPlaceInformation, response, context);
+            }
+
+            @Override
+            public void errorResponse(String message, JSONObject jsonObject) {
+                iPlaceInformation.getPlaceInformationFail(placeDTO, ADD_PLACE_INFORMATION_ERROR);
+            }
+        }, coupleParamsList, "POST", true);
+
+        httpServices.execute(context.getString(R.string.google_places_detail_url));
+
+
     }
 }
