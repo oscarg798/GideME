@@ -54,6 +54,10 @@
     <string name="book_store">Tienda de Libros</string>
     <string name="bowling_alley">Bolera</string>
     <string name="bus_station">Estación de Bus</string>
+    <string name="car_dealer">car_dealer</string>
+    <string name="car_rental">car_rental</string>
+    <string name="car_repair">car_repair</string>
+    <string name="car_wash">car_wash</string>
     <!--Categories End-->
 
     <!--Labels-->

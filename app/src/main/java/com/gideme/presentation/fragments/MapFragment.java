@@ -2,6 +2,7 @@ package com.gideme.presentation.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,7 +15,15 @@ import android.view.ViewGroup;
 
 import com.gideme.R;
 import com.gideme.entities.dto.LocationDTO;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,7 +33,7 @@ import com.google.android.gms.maps.GoogleMap;
  * Use the {@link MapFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MapFragment extends Fragment {
+public class MapFragment extends com.google.android.gms.maps.MapFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
@@ -52,20 +61,30 @@ public class MapFragment extends Fragment {
         if (getArguments() != null) {
             placeLocation = (LocationDTO) getArguments().getSerializable("location");
         }
+        initComponents();
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        initComponents();
-        return inflater.inflate(R.layout.fragment_map, container, false);
-    }
 
 
     public void initComponents() {
-        map = getMapFragment().map;
-        map.setMyLocationEnabled(true);
+        getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                map = googleMap;
+                map.setMyLocationEnabled(true);
+                LatLng latLng =new LatLng(placeLocation.getLat(), placeLocation.getLng());
+                Marker m = googleMap.addMarker(new MarkerOptions()
+                        .position(latLng));
+
+
+                CameraPosition posicion = new CameraPosition.Builder().target(latLng)
+                        .zoom(15).build();
+                CameraUpdate camUpd = CameraUpdateFactory.newCameraPosition(posicion);
+                googleMap.animateCamera(camUpd, 2000, null);
+
+            }
+        });
+
 
     }
 

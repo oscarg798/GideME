@@ -32,6 +32,30 @@
         <item>bank</item>
         <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
     </string-array>
+    <string-array name="car_dealer">
+        <item>@string/car_dealer</item>
+        <item>car_dealer</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="car_rental">
+        <item>@string/car_rental</item>
+        <item>car_rental</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="car_repair">
+        <item>@string/car_repair</item>
+        <item>car_repair</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="car_wash">
+        <item>@string/car_wash</item>
+        <item>car_wash</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+
+
+
+
 
 
     <array name="categories">
@@ -41,6 +65,10 @@
         <item>@array/aquarium</item>
         <item>@array/atm</item>
         <item>@array/bank</item>
+        <item>@array/car_dealer</item>
+        <item>@array/car_rental</item>
+        <item>@array/car_repair</item>
+        <item>@array/car_wash</item>
     </array>
 
 </resources>

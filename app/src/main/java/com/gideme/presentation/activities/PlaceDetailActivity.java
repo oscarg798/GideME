@@ -3,7 +3,9 @@ package com.gideme.presentation.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
@@ -38,6 +40,10 @@ public class PlaceDetailActivity extends AppCompatActivity {
     private TextView txtPlace;
 
     private Fragment fragment;
+
+    private AppBarLayout appBarLayout;
+
+    private CoordinatorLayout coordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,17 +84,37 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.cl_place_detail);
+
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.ctl_title);
 
         ivPlaceImage = (ImageView) findViewById(R.id.iv_place_image);
 
         collapsingToolbarLayout.setTitle(placeDTO.getName());
+        collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
+        collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
+        collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBarPlus1);
+        collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarPlus1);
+
+        appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
 
         txtPlaceAddress = (TextView) findViewById(R.id.txt_place_Address);
 
         txtPlacePhoneNumber = (TextView) findViewById(R.id.txt_place_phone_number);
 
         frameLayout = (FrameLayout) findViewById(R.id.frame_layout);
+
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
+        AppBarLayout.Behavior behavior = new AppBarLayout.Behavior();
+        behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
+            @Override
+            public boolean canDrag(AppBarLayout appBarLayout) {
+                return false;
+            }
+        });
+        params.setBehavior(behavior);
+
+
 
 
         if (placeDTO.getPhotosReference() != null
