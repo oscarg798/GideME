@@ -52,10 +52,372 @@
         <item>car_wash</item>
         <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
     </string-array>
+    <string-array name="casino">
+        <item>@string/casino</item>
+        <item>casino</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="cemetery">
+        <item>@string/cemetery</item>
+        <item>cemetery</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="church">
+        <item>@string/church</item>
+        <item>church</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="city_hall">
+        <item>@string/city_hall</item>
+        <item>city_hall</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="clothing_store">
+        <item>@string/clothing_store</item>
+        <item>clothing_store</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="convenience_store">
+        <item>@string/convenience_store</item>
+        <item>convenience_store</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="courthouse">
+        <item>@string/courthouse</item>
+        <item>courthouse</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="dentist">
+        <item>@string/dentist</item>
+        <item>dentist</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="department_store">
+        <item>@string/department_store</item>
+        <item>department_store</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="doctor">
+        <item>@string/doctor</item>
+        <item>doctor</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="electrician">
+        <item>@string/doctor</item>
+        <item>electrician</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="electronics_store">
+        <item>@string/electronics_store</item>
+        <item>electronics_store</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="embassy">
+        <item>@string/embassy</item>
+        <item>embassy</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="establishment">
+        <item>@string/establishment</item>
+        <item>establishment</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="finance">
+        <item>@string/finance</item>
+        <item>finance</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="food">
+        <item>@string/food</item>
+        <item>food</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="funeral_home">
+        <item>@string/funeral_home</item>
+        <item>funeral_home</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="gas_station">
+        <item>@string/gas_station</item>
+        <item>gas_station</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="grocery_or_supermarket">
+        <item>@string/grocery_or_supermarket</item>
+        <item>grocery_or_supermarket</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="gym">
+        <item>@string/gym</item>
+        <item>gym</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="hair_care">
+        <item>@string/hair_care</item>
+        <item>hair_care</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="hardware_store">
+        <item>@string/hardware_store</item>
+        <item>hardware_store</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="health">
+        <item>@string/health</item>
+        <item>health</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="hindu_temple">
+        <item>@string/hindu_temple</item>
+        <item>hindu_temple</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="furniture_store">
+        <item>@string/furniture_store</item>
+        <item>furniture_store</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
 
-
-
-
+    <string-array name="home_goods_store">
+        <item>@string/home_goods_store</item>
+        <item>home_goods_store</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="hospital">
+        <item>@string/hospital</item>
+        <item>hospital</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="insurance_agency">
+        <item>@string/insurance_agency</item>
+        <item>insurance_agency</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="jewelry_store">
+        <item>@string/jewelry_store</item>
+        <item>jewelry_store</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="laundry">
+        <item>@string/laundry</item>
+        <item>laundry</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="lawyer">
+        <item>@string/lawyer</item>
+        <item>lawyer</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="liquor_store">
+        <item>@string/liquor_store</item>
+        <item>liquor_store</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="library">
+        <item>@string/library</item>
+        <item>library</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="local_government_office">
+        <item>@string/local_government_office</item>
+        <item>local_government_office</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="locksmith">
+        <item>@string/locksmith</item>
+        <item>locksmith</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="lodging">
+        <item>@string/lodging</item>
+        <item>lodging</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="meal_delivery">
+        <item>@string/meal_delivery</item>
+        <item>meal_delivery</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="meal_takeaway">
+        <item>@string/meal_takeaway</item>
+        <item>meal_takeaway</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="mosque">
+        <item>@string/mosque</item>
+        <item>mosque</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="movie_rental">
+        <item>@string/movie_rental</item>
+        <item>movie_rental</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="movie_theater">
+        <item>@string/movie_theater</item>
+        <item>movie_theater</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="moving_company">
+        <item>@string/moving_company</item>
+        <item>moving_company</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="museum">
+        <item>@string/museum</item>
+        <item>museum</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="night_club">
+        <item>@string/night_club</item>
+        <item>night_club</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="painter">
+        <item>@string/painter</item>
+        <item>painter</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="park">
+        <item>@string/park</item>
+        <item>park</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="parking">
+        <item>@string/parking</item>
+        <item>parking</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="pet_store">
+        <item>@string/pet_store</item>
+        <item>pet_store</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="pharmacy">
+        <item>@string/pharmacy</item>
+        <item>pharmacy</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="physiotherapist">
+        <item>@string/physiotherapist</item>
+        <item>physiotherapist</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="place_of_worship">
+        <item>@string/place_of_worship</item>
+        <item>place_of_worship</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="plumber">
+        <item>@string/plumber</item>
+        <item>plumber</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="police">
+        <item>@string/police</item>
+        <item>police</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="post_office">
+        <item>@string/post_office</item>
+        <item>post_office</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="real_estate_agency">
+        <item>@string/real_estate_agency</item>
+        <item>real_estate_agency</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="restaurant">
+        <item>@string/restaurant</item>
+        <item>restaurant</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="roofing_contractor">
+        <item>@string/roofing_contractor</item>
+        <item>roofing_contractor</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="rv_park">
+        <item>@string/rv_park</item>
+        <item>rv_park</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="school">
+        <item>@string/school</item>
+        <item>school</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="shoe_store">
+        <item>@string/shoe_store</item>
+        <item>shoe_store</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="shopping_mall">
+        <item>@string/shopping_mall</item>
+        <item>shopping_mall</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="spa">
+        <item>@string/spa</item>
+        <item>spa</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="stadium">
+        <item>@string/stadium</item>
+        <item>stadium</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="storage">
+        <item>@string/storage</item>
+        <item>storage</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="store">
+        <item>@string/store</item>
+        <item>store</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="subway_station">
+        <item>@string/subway_station</item>
+        <item>subway_station</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="synagogue">
+        <item>@string/synagogue</item>
+        <item>synagogue</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="taxi_stand">
+        <item>@string/taxi_stand</item>
+        <item>taxi_stand</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="train_station">
+        <item>@string/train_station</item>
+        <item>train_station</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="travel_agency">
+        <item>@string/travel_agency</item>
+        <item>travel_agency</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="university">
+        <item>@string/university</item>
+        <item>university</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="veterinary_care">
+        <item>@string/veterinary_care</item>
+        <item>veterinary_care</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
+    <string-array name="zoo">
+        <item>@string/zoo</item>
+        <item>zoo</item>
+        <item>https://maps.gstatic.com/mapfiles/place_api/icons/bank_dollar-71.png</item>
+    </string-array>
 
 
     <array name="categories">
@@ -66,9 +428,75 @@
         <item>@array/atm</item>
         <item>@array/bank</item>
         <item>@array/car_dealer</item>
-        <item>@array/car_rental</item>
-        <item>@array/car_repair</item>
-        <item>@array/car_wash</item>
+        <item>@array/casino</item>
+        <item>@array/cemetery</item>
+        <item>@array/church</item>
+        <item>@array/city_hall</item>
+        <item>@array/clothing_store</item>
+        <item>@array/convenience_store</item>
+        <item>@array/courthouse</item>
+        <item>@array/dentist</item>
+        <item>@array/electrician</item>
+        <item>@array/electronics_store</item>
+        <item>@array/establishment</item>
+        <item>@array/food</item>
+        <item>@array/doctor</item>
+        <item>@array/funeral_home</item>
+        <item>@array/furniture_store</item>
+        <item>@array/gas_station</item>
+        <item>@array/grocery_or_supermarket</item>
+        <item>@array/gym</item>
+        <item>@array/hair_care</item>
+        <item>@array/hardware_store</item>
+        <item>@array/health</item>
+        <item>@array/hindu_temple</item>
+        <item>@array/home_goods_store</item>
+        <item>@array/hospital</item>
+        <item>@array/insurance_agency</item>
+        <item>@array/jewelry_store</item>
+        <item>@array/laundry</item>
+        <item>@array/lawyer</item>
+        <item>@array/library</item>
+        <item>@array/liquor_store</item>
+        <item>@array/local_government_office</item>
+        <item>@array/locksmith</item>
+        <item>@array/lodging</item>
+        <item>@array/meal_delivery</item>
+        <item>@array/meal_takeaway</item>
+        <item>@array/mosque</item>
+        <item>@array/movie_rental</item>
+        <item>@array/movie_theater</item>
+        <item>@array/museum</item>
+        <item>@array/night_club</item>
+        <item>@array/park</item>
+        <item>@array/parking</item>
+        <item>@array/pet_store</item>
+        <item>@array/pharmacy</item>
+        <item>@array/physiotherapist</item>
+        <item>@array/place_of_worship</item>
+        <item>@array/plumber</item>
+        <item>@array/police</item>
+        <item>@array/post_office</item>
+        <item>@array/real_estate_agency</item>
+        <item>@array/restaurant</item>
+        <item>@array/roofing_contractor</item>
+        <item>@array/rv_park</item>
+        <item>@array/school</item>
+        <item>@array/shoe_store</item>
+        <item>@array/shopping_mall</item>
+        <item>@array/spa</item>
+        <item>@array/stadium</item>
+        <item>@array/storage</item>
+        <item>@array/store</item>
+        <item>@array/subway_station</item>
+        <item>@array/synagogue</item>
+        <item>@array/taxi_stand</item>
+        <item>@array/train_station</item>
+        <item>@array/travel_agency</item>
+        <item>@array/university</item>
+        <item>@array/veterinary_care</item>
+        <item>@array/zoo</item>
+
     </array>
 
 </resources>
