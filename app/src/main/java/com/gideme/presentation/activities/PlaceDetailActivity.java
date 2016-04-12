@@ -6,8 +6,12 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,6 +48,12 @@ public class PlaceDetailActivity extends AppCompatActivity {
     private AppBarLayout appBarLayout;
 
     private CoordinatorLayout coordinatorLayout;
+
+    private FloatingActionButton fab1;
+
+    private FloatingActionButton fab;
+
+    private boolean hasShowMenuFAB = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +106,8 @@ public class PlaceDetailActivity extends AppCompatActivity {
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBarPlus1);
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarPlus1);
 
+        fab1 = (FloatingActionButton) findViewById(R.id.fab1);
+
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
 
         txtPlaceAddress = (TextView) findViewById(R.id.txt_place_Address);
@@ -113,6 +125,34 @@ public class PlaceDetailActivity extends AppCompatActivity {
             }
         });
         params.setBehavior(behavior);
+
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                    Animation show_fab_1 = AnimationUtils.loadAnimation(getApplication(), R.anim.show_fab);
+                    CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) fab1.getLayoutParams();
+                    layoutParams.rightMargin += (int) (fab1.getWidth() * 1.7);
+                    layoutParams.bottomMargin += (int) (fab1.getHeight() * 0.25);
+                    fab1.setLayoutParams(layoutParams);
+                    fab1.startAnimation(show_fab_1);
+                    //fab1.setVisibility(View.VISIBLE);
+                    fab1.setClickable(true);
+
+
+            }
+        });
+
+        fab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideMenuButton((FloatingActionButton)v);
+            }
+        });
+
 
 
 
@@ -145,6 +185,16 @@ public class PlaceDetailActivity extends AppCompatActivity {
         fragmentManager.beginTransaction()
                 .replace(R.id.frame_layout, fragment)
                 .commit();
+    }
+
+    private void hideMenuButton(FloatingActionButton fab){
+        Animation hide_fab_1 = AnimationUtils.loadAnimation(getApplication(), R.anim.hide_fab);
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
+        layoutParams.rightMargin -= (int) (fab.getWidth() * 1.7);
+        layoutParams.bottomMargin -= (int) (fab.getHeight() * 0.25);
+        fab1.setLayoutParams(layoutParams);
+        fab1.startAnimation(hide_fab_1);
+        fab1.setClickable(false);
     }
 
 }

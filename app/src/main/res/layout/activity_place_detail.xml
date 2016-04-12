@@ -65,5 +65,18 @@
         android:src="@drawable/ic_star_black_24dp"
         android:layout_height="wrap_content" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab1"
+        app:layout_anchor="@id/app_bar_layout"
+        app:layout_anchorGravity="bottom|end|right"
+        android:layout_marginRight="@dimen/mini_fab_margin"
+        android:layout_width="wrap_content"
+        app:backgroundTint="@color/colorPrimary"
+        android:tint="@color/textIcons"
+        android:visibility="invisible"
+        android:src="@drawable/ic_star_black_24dp"
+        app:fabSize="mini"
+        android:layout_height="wrap_content" />
+
 
 </android.support.design.widget.CoordinatorLayout>
