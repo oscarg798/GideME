@@ -29,7 +29,7 @@ public class PlacesByCategoryActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Toolbar toolbar;
     private PlacesByCategoryController placesByCategoryController;
-    final LocationDTO locationDTO = new LocationDTO(6.181851, -75.591253);
+    private LocationDTO locationDTO = null;
 
 
     @Override
@@ -47,6 +47,8 @@ public class PlacesByCategoryActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         final String category = getIntent().getExtras().getString(getApplicationContext()
                 .getString(R.string.category_key));
+
+        locationDTO = (LocationDTO) getIntent().getExtras().getSerializable(getString(R.string.location_key));
 
         placesByCategoryController
                 .getPlacesByCategory(category, "4000", locationDTO);

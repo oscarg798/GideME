@@ -102,7 +102,7 @@ public class AbstractController {
     }
 
 
-    public void showAlertDialogWithTwoCustomOnClickListener(String title, String message) {
+    public void showAlertDialog(String title, String message) {
         /**
          * Creamos el dialogo
          */
@@ -134,9 +134,9 @@ public class AbstractController {
 
     }
 
-    public void showAlertDialogWithTwoCustomOnClickListener(String title, String message,
-                                                            DialogInterface.OnClickListener onCLickListenerPositiveButton,
-                                                            String postiveButtonTitle) {
+    public void showAlertDialog(String title, String message,
+                                DialogInterface.OnClickListener onCLickListenerPositiveButton,
+                                String postiveButtonTitle) {
 
         /**
          * Creamos el dialogo
@@ -174,10 +174,10 @@ public class AbstractController {
      * @param positiveButtonTitle           titulo boton 1
      * @param negativeButtonTitle           titulo boton 2
      */
-    public void showAlertDialogWithTwoCustomOnClickListener(String title, String message,
-                                                            DialogInterface.OnClickListener onCLickListenerPositiveButton,
-                                                            DialogInterface.OnClickListener onCLickListenerNegativeButton,
-                                                            String positiveButtonTitle, String negativeButtonTitle) {
+    public void showAlertDialog(String title, String message,
+                                DialogInterface.OnClickListener onCLickListenerPositiveButton,
+                                DialogInterface.OnClickListener onCLickListenerNegativeButton,
+                                String positiveButtonTitle, String negativeButtonTitle) {
         /**
          * Creamos el dialogo
          */
@@ -197,8 +197,17 @@ public class AbstractController {
         builder.setPositiveButton(positiveButtonTitle,
                 onCLickListenerPositiveButton);
 
+        if (negativeButtonTitle == null || onCLickListenerNegativeButton == null) {
+            builder.setNegativeButton(getActivity()
+                    .getString(R.string.cancel_label), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
 
-        builder.setNegativeButton(negativeButtonTitle, onCLickListenerNegativeButton);
+                }
+            });
+        } else {
+            builder.setNegativeButton(negativeButtonTitle, onCLickListenerNegativeButton);
+        }
 
 
         /**

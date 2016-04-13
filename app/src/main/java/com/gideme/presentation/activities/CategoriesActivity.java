@@ -1,6 +1,7 @@
 package com.gideme.presentation.activities;
 
 import android.content.res.TypedArray;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,10 +12,12 @@ import android.view.View;
 import com.gideme.R;
 import com.gideme.controllers.CategoryController;
 import com.gideme.entities.dto.CategoryDTO;
+import com.gideme.entities.dto.LocationDTO;
 import com.gideme.entities.utils.CoupleParams;
 import com.gideme.presentation.adapters.CategoriesAdapter;
 import com.gideme.presentation.listeners.RecyclerItemOnClickListener;
 import com.gideme.presentation.listeners.interfaces.OnItemClickListener;
+import com.gideme.utils.UTILEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,7 @@ public class CategoriesActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private CategoryController categoriesController;
     private RecyclerView recyclerView;
+    private LocationDTO locationDTO;
 
 
     @Override
@@ -42,8 +46,12 @@ public class CategoriesActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         getCategoriesArray();
         createCategoriesView();
+        categoriesController.getUserLocation(UTILEnum.NETWORK);
     }
 
+    public void userLocationAvaliable(Location location) {
+        locationDTO = new LocationDTO(location.getLatitude(), location.getLongitude());
+    }
 
     public void getCategoriesArray() {
         TypedArray typedArray = getResources().obtainTypedArray(R.array.categories);
@@ -71,13 +79,25 @@ public class CategoriesActivity extends AppCompatActivity {
 
         recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position){
-                CategoryDTO categoryDTO = categoriesList.get(position);
-                List<CoupleParams> coupleParamses = new ArrayList<CoupleParams>();
-              coupleParamses.add(new CoupleParams.CoupleParamBuilder(getApplicationContext()
-              .getString(R.string.category_key))
-                      .nestedParam(categoryDTO.getCategoryKey()).createCoupleParam());
-                categoriesController.changeActivity(PlacesByCategoryActivity.class, coupleParamses);
+            public void onItemClick(View view, int position) {
+                if (locationDTO != null) {
+                    CategoryDTO categoryDTO = categoriesList.get(position);
+                    List<CoupleParams> coupleParamses = new ArrayList<CoupleParams>();
+
+                    coupleParamses.add(new CoupleParams.CoupleParamBuilder(getApplicationContext()
+                            .getString(R.string.category_key))
+                            .nestedParam(categoryDTO.getCategoryKey()).createCoupleParam());
+
+                    coupleParamses.add(new CoupleParams
+                            .CoupleParamBuilder(getString(R.string.location_key))
+                            .nestedObject(locationDTO).createCoupleParam());
+
+                    categoriesController.changeActivity(PlacesByCategoryActivity.class, coupleParamses);
+                } else {
+                    categoriesController.showAlertDialog(getString(R.string.error_title),
+                            getString(R.string.should_have_location));
+                }
+
             }
         }));
 

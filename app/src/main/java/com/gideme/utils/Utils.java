@@ -42,10 +42,14 @@ public class Utils {
     public static final String APIKEY = "key=";
     public static final String INTERROGATION__SYMBOL="?";
 
-    public static String organizePostServicesParametres(List<CoupleParams> couplePostParams) {
 
+
+
+
+    public static String organizePostServicesParametres(List<CoupleParams> couplePostParams) {
         if (couplePostParams == null)
             return null;
+
 
         StringBuilder result = new StringBuilder();
         boolean first = true;
