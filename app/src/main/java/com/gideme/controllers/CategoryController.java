@@ -2,20 +2,23 @@ package com.gideme.controllers;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Location;
+import android.provider.Settings;
 
 import com.gideme.R;
 import com.gideme.controllers.abstracts.AbstractController;
 import com.gideme.entities.providers.UserLocationProvider;
 import com.gideme.entities.providers.interfaces.LocationProviderUtils;
-import com.gideme.presentation.activities.CategoriesActivity;
+import com.gideme.presentation.fragments.CategoriesFragment;
 import com.gideme.utils.ErrorCodes;
 import com.gideme.utils.UTILEnum;
 
 /**
  * Created by ogallonr on 06/04/2016.
  */
-public class CategoryController extends AbstractController implements LocationProviderUtils.onGetLocation {
+public class CategoryController extends AbstractController implements LocationProviderUtils.onGetLocation,
+    LocationProviderUtils.onSubscribeforLocationUpdates{
     /**
      * Contructor de la clase
      *
@@ -27,7 +30,7 @@ public class CategoryController extends AbstractController implements LocationPr
 
     @Override
     public void locationGot(Location location) {
-        ((CategoriesActivity) getActivity()).userLocationAvaliable(location);
+        ((CategoriesFragment) getFragment()).userLocationAvaliable(location);
     }
 
     @Override
@@ -44,12 +47,14 @@ public class CategoryController extends AbstractController implements LocationPr
                         .getString(R.string.network_provider_disable));
                 break;
             case GPS_PROVIDER_DISABLE:
+
                 showAlertDialog(getActivity().getApplicationContext()
                                 .getString(R.string.error_title), getActivity().getApplicationContext()
                                 .getString(R.string.gps_provider_disable), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                getUserLocation(UTILEnum.NETWORK);
+                                Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                getActivity().startActivity(myIntent);
                             }
                         }, null, getActivity().getApplicationContext().getString(R.string.ok_button_label),
                         null);
@@ -79,4 +84,8 @@ public class CategoryController extends AbstractController implements LocationPr
     }
 
 
+    @Override
+    public void locationUpdateGot(Location location) {
+        
+    }
 }

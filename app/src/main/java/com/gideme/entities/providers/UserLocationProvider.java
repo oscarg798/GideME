@@ -83,7 +83,11 @@ public class UserLocationProvider extends Service implements LocationListener {
         }
     }
 
-    public void getUserLocationByGPS(LocationProviderUtils.onGetLocation onGetLocation) {
+    public void getUserLocationByGPS(LocationProviderUtils.onGetLocation onGetLocation
+                                     , LocationProviderUtils.onSubscribeforLocationUpdates
+                                             onSubscribeforLocationUpdates) {
+
+        getLocationUpdates(onSubscribeforLocationUpdates);
         if (isGPSEnabled()) {
             if (userLocation == null) {
                 locationManager.requestLocationUpdates(

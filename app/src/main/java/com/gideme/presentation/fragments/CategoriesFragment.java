@@ -1,52 +1,75 @@
-package com.gideme.presentation.activities;
+package com.gideme.presentation.fragments;
 
+import android.app.Fragment;
 import android.content.res.TypedArray;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.gideme.R;
 import com.gideme.controllers.CategoryController;
 import com.gideme.entities.dto.CategoryDTO;
 import com.gideme.entities.dto.LocationDTO;
 import com.gideme.entities.utils.CoupleParams;
+import com.gideme.presentation.activities.PlacesByCategoryActivity;
 import com.gideme.presentation.adapters.CategoriesAdapter;
 import com.gideme.presentation.listeners.RecyclerItemOnClickListener;
 import com.gideme.presentation.listeners.interfaces.OnItemClickListener;
 import com.gideme.utils.UTILEnum;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.LocationSettingsResult;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoriesActivity extends AppCompatActivity {
+
+public class CategoriesFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        ResultCallback<LocationSettingsResult> {
 
     private List<CategoryDTO> categoriesList;
     private Toolbar toolbar;
     private CategoryController categoriesController;
     private RecyclerView recyclerView;
     private LocationDTO locationDTO;
+    protected GoogleApiClient mGoogleApiClient;
 
+    public CategoriesFragment() {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categories);
-        categoriesController = new CategoryController(this);
-        initViewComponents();
     }
 
+    public static CategoriesFragment newInstance(){
+        return new CategoriesFragment();
+    }
 
-    public void initViewComponents() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        categoriesController = new CategoryController(getActivity());
+        categoriesController.setFragment(this);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.categories_fragment, container, false);
+        initViewComponents(view);
+        return view;
+    }
+
+    public void initViewComponents(View view) {
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         getCategoriesArray();
         createCategoriesView();
-        categoriesController.getUserLocation(UTILEnum.NETWORK);
+        categoriesController.getUserLocation(UTILEnum.GPS);
     }
 
     public void userLocationAvaliable(Location location) {
@@ -70,21 +93,21 @@ public class CategoriesActivity extends AppCompatActivity {
     }
 
     public void createCategoriesView() {
-        GridLayoutManager mLayoutManager = new GridLayoutManager(this, 2);
+        GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setHasFixedSize(true);
-        CategoriesAdapter categoriesAdapter = new CategoriesAdapter(categoriesList, getApplicationContext());
+        CategoriesAdapter categoriesAdapter = new CategoriesAdapter(categoriesList, getActivity().getApplicationContext());
         recyclerView.setAdapter(categoriesAdapter);
 
 
-        recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new OnItemClickListener() {
+        recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getActivity().getApplicationContext(), new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 if (locationDTO != null) {
                     CategoryDTO categoryDTO = categoriesList.get(position);
                     List<CoupleParams> coupleParamses = new ArrayList<CoupleParams>();
 
-                    coupleParamses.add(new CoupleParams.CoupleParamBuilder(getApplicationContext()
+                    coupleParamses.add(new CoupleParams.CoupleParamBuilder(getActivity().getApplicationContext()
                             .getString(R.string.category_key))
                             .nestedParam(categoryDTO.getCategoryKey()).createCoupleParam());
 
@@ -104,4 +127,23 @@ public class CategoriesActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onConnected(Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onResult(LocationSettingsResult locationSettingsResult) {
+
+    }
 }
