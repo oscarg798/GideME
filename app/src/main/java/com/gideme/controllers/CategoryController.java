@@ -18,7 +18,7 @@ import com.gideme.utils.UTILEnum;
  * Created by ogallonr on 06/04/2016.
  */
 public class CategoryController extends AbstractController implements LocationProviderUtils.onGetLocation,
-    LocationProviderUtils.onSubscribeforLocationUpdates{
+        LocationProviderUtils.onSubscribeforLocationUpdates {
     /**
      * Contructor de la clase
      *
@@ -72,7 +72,7 @@ public class CategoryController extends AbstractController implements LocationPr
             case GPS:
                 UserLocationProvider
                         .getLocationProvider(getActivity().getApplicationContext())
-                        .getUserLocationByGPS(this);
+                        .getUserLocationByGPS(this, this);
                 break;
             case NETWORK:
                 UserLocationProvider
@@ -86,6 +86,6 @@ public class CategoryController extends AbstractController implements LocationPr
 
     @Override
     public void locationUpdateGot(Location location) {
-        
+        ((CategoriesFragment) getFragment()).userLocationAvaliable(location);
     }
 }

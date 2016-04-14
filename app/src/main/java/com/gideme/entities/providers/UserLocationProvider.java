@@ -15,6 +15,9 @@ import android.util.Log;
 import com.gideme.entities.providers.interfaces.LocationProviderUtils;
 import com.gideme.utils.ErrorCodes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by oscargallon on 4/12/16.
  */
@@ -28,20 +31,22 @@ public class UserLocationProvider extends Service implements LocationListener {
 
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
 
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60;
+    private static final long MIN_TIME_BW_UPDATES = 10000;
 
     private Location userLocation;
 
-    private LocationProviderUtils.onSubscribeforLocationUpdates onSubscribeforLocationUpdates;
+    private List<LocationProviderUtils.onSubscribeforLocationUpdates> onSubscribeforLocationUpdatesList;
 
     private boolean hasGotLocationOnce = false;
 
     public static UserLocationProvider UserLocationProvider;
 
+
     private UserLocationProvider(Context context) {
         this.context = context;
         this.locationManager = (LocationManager) this.context
                 .getSystemService(LOCATION_SERVICE);
+        onSubscribeforLocationUpdatesList = new ArrayList<>();
 
     }
 
@@ -54,7 +59,6 @@ public class UserLocationProvider extends Service implements LocationListener {
 
     public void getUserLocationByNetwork(LocationProviderUtils.onGetLocation onGetLocation) {
         if (isNetworkEnabled()) {
-            userLocation = null;
             locationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER,
                     MIN_TIME_BW_UPDATES,
@@ -84,48 +88,44 @@ public class UserLocationProvider extends Service implements LocationListener {
     }
 
     public void getUserLocationByGPS(LocationProviderUtils.onGetLocation onGetLocation
-                                     , LocationProviderUtils.onSubscribeforLocationUpdates
+            , LocationProviderUtils.onSubscribeforLocationUpdates
                                              onSubscribeforLocationUpdates) {
 
         getLocationUpdates(onSubscribeforLocationUpdates);
         if (isGPSEnabled()) {
-            if (userLocation == null) {
-                locationManager.requestLocationUpdates(
-                        LocationManager.GPS_PROVIDER,
-                        MIN_TIME_BW_UPDATES,
-                        MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                Log.d("GPS Enabled", "GPS Enabled");
-                if (locationManager != null) {
-                    userLocation = locationManager
-                            .getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    if (userLocation != null) {
-                        hasGotLocationOnce = true;
-                        onGetLocation.locationGot(userLocation);
-                    } else {
-                        onGetLocation
-                                .errorGettingLocation(ErrorCodes.CAN_NOT_GET_USER_LOCATION);
-                    }
-                } else {
-                    onGetLocation
-                            .errorGettingLocation(ErrorCodes.LOCATION_MANAGER_UNAVALAIBLE);
+            locationManager.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER,
+                    MIN_TIME_BW_UPDATES,
+                    MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+            Log.d("GPS Enabled", "GPS Enabled");
+            if (locationManager != null) {
+                userLocation = locationManager
+                        .getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                if (userLocation != null) {
+                    hasGotLocationOnce = true;
+                    onGetLocation.locationGot(userLocation);
                 }
-                locationManager.removeUpdates(this);
+            } else {
+                onGetLocation
+                        .errorGettingLocation(ErrorCodes.LOCATION_MANAGER_UNAVALAIBLE);
             }
-        } else {
-            onGetLocation
-                    .errorGettingLocation(ErrorCodes.GPS_PROVIDER_DISABLE);
         }
+
     }
 
     private void getLocationUpdates(LocationProviderUtils.onSubscribeforLocationUpdates
                                             onSubscribeforLocationUpdates) {
-        this.onSubscribeforLocationUpdates = onSubscribeforLocationUpdates;
+        if (this.onSubscribeforLocationUpdatesList != null) {
+            this.onSubscribeforLocationUpdatesList.add(onSubscribeforLocationUpdates);
+
+        }
 
 
     }
 
     private void unSuscribeLocationUpdates() {
-        this.onSubscribeforLocationUpdates = null;
+
+        this.onSubscribeforLocationUpdatesList = null;
     }
 
 
@@ -142,8 +142,17 @@ public class UserLocationProvider extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        if (onSubscribeforLocationUpdates != null && hasGotLocationOnce ) {
-            onSubscribeforLocationUpdates.locationUpdateGot(location);
+        if (onSubscribeforLocationUpdatesList != null) {
+            for (LocationProviderUtils.onSubscribeforLocationUpdates on : onSubscribeforLocationUpdatesList) {
+                on.locationUpdateGot(location);
+            }
+
+            onSubscribeforLocationUpdatesList = null;
+            if(locationManager!=null){
+                locationManager.removeUpdates(this);
+
+            }
+
         }
     }
 

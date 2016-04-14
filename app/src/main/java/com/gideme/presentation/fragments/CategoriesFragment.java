@@ -1,6 +1,7 @@
 package com.gideme.presentation.fragments;
 
 import android.app.Fragment;
+import android.content.IntentSender;
 import android.content.res.TypedArray;
 import android.location.Location;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +26,15 @@ import com.gideme.presentation.listeners.interfaces.OnItemClickListener;
 import com.gideme.utils.UTILEnum;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStates;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,13 +49,13 @@ public class CategoriesFragment extends Fragment implements GoogleApiClient.Conn
     private CategoryController categoriesController;
     private RecyclerView recyclerView;
     private LocationDTO locationDTO;
-    protected GoogleApiClient mGoogleApiClient;
+    protected GoogleApiClient googleApiClient;
 
     public CategoriesFragment() {
 
     }
 
-    public static CategoriesFragment newInstance(){
+    public static CategoriesFragment newInstance() {
         return new CategoriesFragment();
     }
 
@@ -55,6 +64,56 @@ public class CategoriesFragment extends Fragment implements GoogleApiClient.Conn
         super.onCreate(savedInstanceState);
         categoriesController = new CategoryController(getActivity());
         categoriesController.setFragment(this);
+        googleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this).build();
+        googleApiClient.connect();
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(30 * 1000);
+        locationRequest.setFastestInterval(5 * 1000);
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest);
+
+        //**************************
+        builder.setAlwaysShow(true);
+
+        PendingResult<LocationSettingsResult> result =
+                LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
+        result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+            @Override
+            public void onResult(LocationSettingsResult result) {
+                final Status status = result.getStatus();
+                final LocationSettingsStates state = result.getLocationSettingsStates();
+                switch (status.getStatusCode()) {
+                    case LocationSettingsStatusCodes.SUCCESS:
+                        // All location settings are satisfied. The client can initialize location
+                        // requests here.
+                        categoriesController.getUserLocation(UTILEnum.GPS);
+
+                        break;
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        // Location settings are not satisfied. But could be fixed by showing the user
+                        // a dialog.
+                        try {
+                            // Show the dialog by calling startResolutionForResult(),
+                            // and check the result in onActivityResult().
+                            status.startResolutionForResult(
+                                    getActivity(), 1000);
+                        } catch (IntentSender.SendIntentException e) {
+                            // Ignore the error.
+                        }
+                        break;
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        // Location settings are not satisfied. However, we have no way to fix the
+                        // settings so we won't show the dialog.
+                        break;
+                }
+            }
+        });
+
+        //getActivity().startActivityForResult(result);
     }
 
     @Nullable
@@ -69,7 +128,6 @@ public class CategoriesFragment extends Fragment implements GoogleApiClient.Conn
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         getCategoriesArray();
         createCategoriesView();
-        categoriesController.getUserLocation(UTILEnum.GPS);
     }
 
     public void userLocationAvaliable(Location location) {
@@ -130,20 +188,23 @@ public class CategoriesFragment extends Fragment implements GoogleApiClient.Conn
     @Override
     public void onConnected(Bundle bundle) {
 
+        Log.i("CONNECT", "GOOGLE PLAY SERVICES");
+
     }
 
     @Override
     public void onConnectionSuspended(int i) {
+        Log.i("CONNECT SUSPEND", "GOOGLE PLAY SERVICES");
 
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-
+        Log.i("CONNECT FAILED", "GOOGLE PLAY SERVICES");
     }
 
     @Override
     public void onResult(LocationSettingsResult locationSettingsResult) {
-
+        Log.i("CONNECT ON RESULT", "GOOGLE PLAY SERVICES");
     }
 }
