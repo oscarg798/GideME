@@ -17,8 +17,7 @@ import com.gideme.utils.UTILEnum;
 /**
  * Created by ogallonr on 06/04/2016.
  */
-public class CategoryController extends AbstractController implements LocationProviderUtils.onGetLocation,
-        LocationProviderUtils.onSubscribeforLocationUpdates {
+public class CategoryController extends AbstractController  {
     /**
      * Contructor de la clase
      *
@@ -28,64 +27,5 @@ public class CategoryController extends AbstractController implements LocationPr
         super(activity);
     }
 
-    @Override
-    public void locationGot(Location location) {
-        ((CategoriesFragment) getFragment()).userLocationAvaliable(location);
-    }
 
-    @Override
-    public void errorGettingLocation(ErrorCodes error) {
-        switch (error) {
-            case CAN_NOT_GET_USER_LOCATION:
-                showAlertDialog(getActivity().getApplicationContext()
-                        .getString(R.string.error_title), getActivity().getApplicationContext()
-                        .getString(R.string.can_not_get_location));
-                break;
-            case NETWORK_PROVIDER_DISABLE:
-                showAlertDialog(getActivity().getApplicationContext()
-                        .getString(R.string.error_title), getActivity().getApplicationContext()
-                        .getString(R.string.network_provider_disable));
-                break;
-            case GPS_PROVIDER_DISABLE:
-
-                showAlertDialog(getActivity().getApplicationContext()
-                                .getString(R.string.error_title), getActivity().getApplicationContext()
-                                .getString(R.string.gps_provider_disable), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                                getActivity().startActivity(myIntent);
-                            }
-                        }, null, getActivity().getApplicationContext().getString(R.string.ok_button_label),
-                        null);
-                break;
-            case LOCATION_MANAGER_UNAVALAIBLE:
-                showAlertDialog(getActivity().getApplicationContext()
-                        .getString(R.string.error_title), getActivity().getApplicationContext()
-                        .getString(R.string.location_manager_unavaliable));
-                break;
-        }
-    }
-
-    public void getUserLocation(UTILEnum utilEnum) {
-        switch (utilEnum) {
-            case GPS:
-                UserLocationProvider
-                        .getLocationProvider(getActivity().getApplicationContext())
-                        .getUserLocationByGPS(this, this);
-                break;
-            case NETWORK:
-                UserLocationProvider
-                        .getLocationProvider(getActivity().getApplicationContext())
-                        .getUserLocationByNetwork(this);
-        }
-
-
-    }
-
-
-    @Override
-    public void locationUpdateGot(Location location) {
-        ((CategoriesFragment) getFragment()).userLocationAvaliable(location);
-    }
 }

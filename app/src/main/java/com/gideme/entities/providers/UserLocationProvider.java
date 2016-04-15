@@ -29,9 +29,9 @@ public class UserLocationProvider extends Service implements LocationListener {
 
     private Context context;
 
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0;
 
-    private static final long MIN_TIME_BW_UPDATES = 10000;
+    private static final long MIN_TIME_BW_UPDATES = 0;
 
     private Location userLocation;
 
@@ -94,9 +94,7 @@ public class UserLocationProvider extends Service implements LocationListener {
         getLocationUpdates(onSubscribeforLocationUpdates);
         if (isGPSEnabled()) {
             locationManager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER,
-                    MIN_TIME_BW_UPDATES,
-                    MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                    LocationManager.NETWORK_PROVIDER, 0, 0, this);
             Log.d("GPS Enabled", "GPS Enabled");
             if (locationManager != null) {
                 userLocation = locationManager
@@ -113,19 +111,20 @@ public class UserLocationProvider extends Service implements LocationListener {
 
     }
 
-    private void getLocationUpdates(LocationProviderUtils.onSubscribeforLocationUpdates
-                                            onSubscribeforLocationUpdates) {
-        if (this.onSubscribeforLocationUpdatesList != null) {
-            this.onSubscribeforLocationUpdatesList.add(onSubscribeforLocationUpdates);
-
+    private void getLocationUpdates(LocationProviderUtils.onSubscribeforLocationUpdates onSubscribeforLocationUpdates) {
+        if (this.onSubscribeforLocationUpdatesList == null) {
+            this.onSubscribeforLocationUpdatesList = new ArrayList<>();
         }
+        this.onSubscribeforLocationUpdatesList.add(onSubscribeforLocationUpdates);
 
 
     }
 
     private void unSuscribeLocationUpdates() {
-
         this.onSubscribeforLocationUpdatesList = null;
+        if (this.locationManager != null) {
+            locationManager.removeUpdates(this);
+        }
     }
 
 
@@ -148,12 +147,14 @@ public class UserLocationProvider extends Service implements LocationListener {
             }
 
             onSubscribeforLocationUpdatesList = null;
-            if(locationManager!=null){
+            if (locationManager != null) {
                 locationManager.removeUpdates(this);
 
             }
 
+
         }
+        unSuscribeLocationUpdates();
     }
 
     @Override
