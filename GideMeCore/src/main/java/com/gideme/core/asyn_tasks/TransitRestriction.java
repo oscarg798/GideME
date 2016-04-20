@@ -6,8 +6,12 @@ import android.util.Log;
 
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.maps.android.geometry.Bounds;
+import com.google.maps.android.kml.KmlGeometry;
 import com.google.maps.android.kml.KmlLineString;
 import com.google.maps.android.kml.KmlPlacemark;
+import com.google.maps.android.kml.KmlPolygon;
 import com.rm.androidesentials.utils.ErrorCodes;
 import com.rm.androidesentials.utils.Utils;
 
@@ -36,29 +40,39 @@ public class TransitRestriction extends AsyncTask<String, Boolean, Boolean>  imp
         KmlLineString lineString = null;
         List<LatLng> latLngs = null;
         for (KmlPlacemark placemark : this.placemarkList) {
-            try {
-                lineString = (KmlLineString) placemark.getGeometry();
-            } catch (ClassCastException e) {
+            KmlGeometry geometry = placemark.getGeometry();
+            if(geometry instanceof KmlPolygon) {
+                KmlPolygon polygon = (KmlPolygon) geometry;
+                latLngs = polygon.getOuterBoundaryCoordinates();
+            }
+
+            if(latLngs == null){
                 continue;
             }
 
-            if (lineString == null) {
-                lineString = null;
-                latLngs = null;
-                return false;
-            }
-
+//            try {
+//                lineString = (KmlLineString) placemark.getGeometry();
+//            } catch (ClassCastException e) {
+//                continue;
+//            }
+//
+//            if (lineString == null) {
+//                lineString = null;
+//                latLngs = null;
+//                return false;
+//            }
+//
 
 
             double dist = 0;
-            latLngs = lineString.getGeometryObject();
+//            latLngs = lineString.getGeometryObject();
             for (LatLng latLng : latLngs) {
 
                 dist = Utils.calculateDistanceBetweenTwoLocations(latLng.latitude,
                         latLng.longitude, userLatLng.latitude, userLatLng.longitude,
                         Utils.KILOMETERS);
                 Log.i("DIST", Double.toString(dist));
-                if (dist < 4) {
+                if (dist < 1) {
                     lineString = null;
                     latLngs = null;
                     nestedLocation = latLng;
@@ -71,6 +85,9 @@ public class TransitRestriction extends AsyncTask<String, Boolean, Boolean>  imp
         latLngs = null;
         return true;
     }
+
+
+
 
     @Override
     protected void onPostExecute(Boolean aBoolean) {

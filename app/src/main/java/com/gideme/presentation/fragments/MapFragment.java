@@ -3,39 +3,25 @@ package com.gideme.presentation.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.gideme.R;
 import com.gideme.controllers.MapFragmentController;
-
 import com.gideme.core.entities.dto.LocationDTO;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.GroundOverlay;
-import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.kml.KmlContainer;
-import com.google.maps.android.kml.KmlGeometry;
-import com.google.maps.android.kml.KmlGroundOverlay;
 import com.google.maps.android.kml.KmlLayer;
-import com.google.maps.android.kml.KmlLineString;
-import com.google.maps.android.kml.KmlPlacemark;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -117,7 +103,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment {
                 .position(new LatLng(locationDTO.getLat(), locationDTO.getLng()))
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         try {
-            KmlLayer layer = new KmlLayer(map, R.raw.pico,
+            KmlLayer layer = new KmlLayer(map, com.gideme.core.R.raw.pico,
                     getActivity().getApplicationContext());
             layer.addLayerToMap();
 
