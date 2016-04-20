@@ -1,5 +1,6 @@
 package com.gideme.presentation.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.graphics.BitmapFactory;
@@ -14,22 +15,38 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gideme.R;
-import com.gideme.entities.dto.LocationDTO;
+import com.gideme.controllers.MapFragmentController;
+
+import com.gideme.core.entities.dto.LocationDTO;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.GroundOverlay;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.kml.KmlContainer;
+import com.google.maps.android.kml.KmlGeometry;
+import com.google.maps.android.kml.KmlGroundOverlay;
+import com.google.maps.android.kml.KmlLayer;
+import com.google.maps.android.kml.KmlLineString;
+import com.google.maps.android.kml.KmlPlacemark;
+
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
+ * MapFrament class that extends from {@link Fragment}
  * Activities that contain this fragment must implement the
- * {@link MapFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
+ * {@link com.gideme.presentation.fragments.IFragmentInterfaces.IMapFragment} interface
+ * to handle when map is loadd.
  * Use the {@link MapFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
@@ -37,33 +54,31 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
-    private OnFragmentInteractionListener mListener;
+    private IFragmentInterfaces.IMapFragment iMapFragment;
 
     private GoogleMap map;
 
-    private LocationDTO placeLocation;
+    private static final int PLACE_ZOOM = 15;
+
+    private static final int LAYER_ZOOM = 12;
+
+    private MapFragmentController mapFragmentController;
+
 
     public MapFragment() {
         // Required empty public constructor
     }
 
-    public static MapFragment newInstance(LocationDTO locationDTO) {
-        MapFragment fragment = new MapFragment();
-        Bundle args = new Bundle();
-        args.putSerializable("location", locationDTO);
-        fragment.setArguments(args);
-        return fragment;
+    public static MapFragment newInstance() {
+
+        return new MapFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            placeLocation = (LocationDTO) getArguments().getSerializable("location");
-        }
-        initComponents();
+        mapFragmentController = new MapFragmentController(getActivity());
     }
-
 
 
     public void initComponents() {
@@ -71,16 +86,8 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 map = googleMap;
-                map.setMyLocationEnabled(true);
-                LatLng latLng =new LatLng(placeLocation.getLat(), placeLocation.getLng());
-                Marker m = googleMap.addMarker(new MarkerOptions()
-                        .position(latLng));
-
-
-                CameraPosition posicion = new CameraPosition.Builder().target(latLng)
-                        .zoom(15).build();
-                CameraUpdate camUpd = CameraUpdateFactory.newCameraPosition(posicion);
-                googleMap.animateCamera(camUpd, 2000, null);
+                //map.setMyLocationEnabled(true);
+                iMapFragment.onMapInitializatedListener();
 
             }
         });
@@ -88,21 +95,71 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment {
 
     }
 
+    public void loadPlaceLocation(LocationDTO locationDTO) {
+        Marker m = map.addMarker(new MarkerOptions()
+                .position(new LatLng(locationDTO.getLat(), locationDTO.getLng())));
+        makeCameraUpdate(locationDTO, PLACE_ZOOM);
+
+
+    }
+
+    private void makeCameraUpdate(LocationDTO locationDTO, int zoom) {
+        CameraPosition posicion = new CameraPosition.Builder().target(
+                new LatLng(locationDTO.getLat(), locationDTO.getLng()))
+                .zoom(zoom).build();
+        CameraUpdate camUpd = CameraUpdateFactory.newCameraPosition(posicion);
+        map.animateCamera(camUpd, 2000, null);
+    }
+
+    public void loadMapLayer(LocationDTO locationDTO) {
+
+        map.addMarker(new MarkerOptions()
+                .position(new LatLng(locationDTO.getLat(), locationDTO.getLng()))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+        try {
+            KmlLayer layer = new KmlLayer(map, R.raw.pico,
+                    getActivity().getApplicationContext());
+            layer.addLayerToMap();
+
+            List<KmlContainer> kmlContainers = (List<KmlContainer>) layer.getContainers();
+            kmlContainers = (List<KmlContainer>) kmlContainers.get(0).getContainers();
+            mapFragmentController.checkTransitRestriction(kmlContainers.get(0).getPlacemarks(),
+                    new LatLng(locationDTO.getLat(), locationDTO.getLng()));
+
+            makeCameraUpdate(locationDTO, LAYER_ZOOM);
+
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        onAttach(getActivity());
+
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof IFragmentInterfaces.IMapFragment) {
+            iMapFragment = (IFragmentInterfaces.IMapFragment) activity;
+            initComponents();
+
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+            throw new RuntimeException(activity.getApplicationContext().toString()
+                    + " must implement IFragmentInterfaces.IMapFragment");
         }
+
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        iMapFragment = null;
     }
 
     /**

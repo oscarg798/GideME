@@ -17,15 +17,14 @@ import android.view.ViewGroup;
 
 import com.gideme.R;
 import com.gideme.controllers.CategoryController;
-import com.gideme.entities.dto.CategoryDTO;
-import com.gideme.entities.dto.LocationDTO;
-import com.gideme.entities.utils.CoupleParams;
+
+import com.gideme.core.entities.dto.CategoryDTO;
+import com.gideme.core.entities.dto.LocationDTO;
 import com.gideme.presentation.activities.NavigationDrawerActivity;
 import com.gideme.presentation.activities.PlacesByCategoryActivity;
 import com.gideme.presentation.adapters.CategoriesAdapter;
 import com.gideme.presentation.listeners.RecyclerItemOnClickListener;
 import com.gideme.presentation.listeners.interfaces.OnItemClickListener;
-import com.gideme.utils.UTILEnum;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -37,6 +36,7 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.rm.androidesentials.model.utils.CoupleParams;
 
 import java.util.ArrayList;
 import java.util.List;

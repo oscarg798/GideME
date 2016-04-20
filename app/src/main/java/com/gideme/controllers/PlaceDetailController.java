@@ -3,11 +3,11 @@ package com.gideme.controllers;
 import android.app.Activity;
 import android.util.Log;
 
-import com.gideme.controllers.abstracts.AbstractController;
-import com.gideme.entities.dto.PlaceDTO;
-import com.gideme.entities.model.IPlaceInformation;
-import com.gideme.entities.model.Place;
+import com.gideme.core.entities.dto.PlaceDTO;
+import com.gideme.core.entities.model.IPlaceInformation;
+import com.gideme.core.entities.model.Place;
 import com.gideme.presentation.activities.PlaceDetailActivity;
+import com.rm.androidesentials.controllers.abstracts.AbstractController;
 
 /**
  * Created by oscargallon on 4/11/16.

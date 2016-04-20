@@ -7,7 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gideme.R;
-import com.gideme.entities.dto.CategoryDTO;
+
+import com.gideme.core.entities.dto.CategoryDTO;
 import com.gideme.presentation.view_holders.CategoryViewHolder;
 import com.gideme.presentation.view_holders.PlaceListViewHolder;
 import com.squareup.picasso.Picasso;

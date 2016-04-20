@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">WearModule</string>
+    <string name="intro_text">Long click to exit the map.</string>
+    <string name="title_activity_transit">TransitActivity</string>
+    <string name="hello_round">Hello Round World!</string>
+    <string name="hello_square">Hello Square World!</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="title_activity_confirmation">ConfirmationActivity</string>
+</resources>

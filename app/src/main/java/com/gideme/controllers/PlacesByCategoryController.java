@@ -2,19 +2,20 @@ package com.gideme.controllers;
 
 import android.app.Activity;
 
-import com.gideme.controllers.abstracts.AbstractController;
-import com.gideme.entities.dto.LocationDTO;
-import com.gideme.entities.dto.PlaceDTO;
-import com.gideme.entities.model.IPlacesByCategory;
-import com.gideme.entities.model.Place;
+
+import com.gideme.core.entities.dto.LocationDTO;
+import com.gideme.core.entities.dto.PlaceDTO;
+import com.gideme.core.entities.model.IPlacesByCategory;
+import com.gideme.core.entities.model.Place;
 import com.gideme.presentation.activities.PlacesByCategoryActivity;
+import com.rm.androidesentials.controllers.abstracts.AbstractController;
 
 import java.util.List;
 
 /**
  * Created by ogallonr on 05/04/2016.
  */
-public class PlacesByCategoryController extends AbstractController implements IPlacesByCategory{
+public class PlacesByCategoryController extends AbstractController implements IPlacesByCategory {
 
     /**
      * Contructor de la clase

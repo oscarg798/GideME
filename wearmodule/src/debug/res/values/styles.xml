@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ActionButton">
+        <item name="circle_border_width">@dimen/circle_border_width</item>
+        <item name="circle_radius">@dimen/circle_radius</item>
+        <item name="circle_color">@color/colorPrimary</item>
+    </style>
+</resources>

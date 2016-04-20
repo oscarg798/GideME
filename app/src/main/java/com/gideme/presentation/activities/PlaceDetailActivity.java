@@ -18,12 +18,14 @@ import android.widget.TextView;
 
 import com.gideme.R;
 import com.gideme.controllers.PlaceDetailController;
-import com.gideme.entities.dto.PlaceDTO;
+import com.gideme.core.entities.dto.PlaceDTO;
+import com.gideme.presentation.fragments.IFragmentInterfaces;
 import com.gideme.presentation.fragments.MapFragment;
-import com.gideme.utils.Utils;
+
+import com.rm.androidesentials.utils.Utils;
 import com.squareup.picasso.Picasso;
 
-public class PlaceDetailActivity extends AppCompatActivity {
+public class PlaceDetailActivity extends AppCompatActivity implements IFragmentInterfaces.IMapFragment {
 
     private ImageView ivPlaceImage;
 
@@ -133,14 +135,14 @@ public class PlaceDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                    Animation show_fab_1 = AnimationUtils.loadAnimation(getApplication(), R.anim.show_fab);
-                    CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) fab1.getLayoutParams();
-                    layoutParams.rightMargin += (int) (fab1.getWidth() * 1.7);
-                    layoutParams.bottomMargin += (int) (fab1.getHeight() * 0.25);
-                    fab1.setLayoutParams(layoutParams);
-                    fab1.startAnimation(show_fab_1);
-                    //fab1.setVisibility(View.VISIBLE);
-                    fab1.setClickable(true);
+                Animation show_fab_1 = AnimationUtils.loadAnimation(getApplication(), R.anim.show_fab);
+                CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) fab1.getLayoutParams();
+                layoutParams.rightMargin += (int) (fab1.getWidth() * 1.7);
+                layoutParams.bottomMargin += (int) (fab1.getHeight() * 0.25);
+                fab1.setLayoutParams(layoutParams);
+                fab1.startAnimation(show_fab_1);
+                //fab1.setVisibility(View.VISIBLE);
+                fab1.setClickable(true);
 
 
             }
@@ -149,12 +151,9 @@ public class PlaceDetailActivity extends AppCompatActivity {
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hideMenuButton((FloatingActionButton)v);
+                hideMenuButton((FloatingActionButton) v);
             }
         });
-
-
-
 
 
         if (placeDTO.getPhotosReference() != null
@@ -173,7 +172,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
         }
 
         fragment =
-                MapFragment.newInstance(placeDTO.getLocationDTO());
+                MapFragment.newInstance();
 
         changeFragment(fragment);
 
@@ -187,7 +186,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
                 .commit();
     }
 
-    private void hideMenuButton(FloatingActionButton fab){
+    private void hideMenuButton(FloatingActionButton fab) {
         Animation hide_fab_1 = AnimationUtils.loadAnimation(getApplication(), R.anim.hide_fab);
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
         layoutParams.rightMargin -= (int) (fab.getWidth() * 1.7);
@@ -197,4 +196,8 @@ public class PlaceDetailActivity extends AppCompatActivity {
         fab1.setClickable(false);
     }
 
+    @Override
+    public void onMapInitializatedListener() {
+        ((MapFragment) fragment).loadPlaceLocation(placeDTO.getLocationDTO());
+    }
 }

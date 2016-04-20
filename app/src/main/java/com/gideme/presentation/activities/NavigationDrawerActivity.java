@@ -19,10 +19,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.gideme.R;
-import com.gideme.controllers.abstracts.NavigationDrawerActivityController;
+
+import com.gideme.controllers.NavigationDrawerActivityController;
+import com.gideme.core.entities.dto.LocationDTO;
 import com.gideme.presentation.fragments.CategoriesFragment;
+import com.gideme.presentation.fragments.IFragmentInterfaces;
+import com.gideme.presentation.fragments.MapFragment;
 import com.gideme.presentation.fragments.TripFragment;
-import com.gideme.utils.UTILEnum;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -34,11 +37,14 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.rm.androidesentials.utils.UTILEnum;
+
+import java.io.Serializable;
 
 public class NavigationDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        ResultCallback<LocationSettingsResult> {
+        ResultCallback<LocationSettingsResult>, IFragmentInterfaces.IMapFragment{
 
 
     protected Fragment fragment;
@@ -172,8 +178,8 @@ public class NavigationDrawerActivity extends AppCompatActivity
             case R.id.location_avalaible: {
                 if (navigationDrawerActivityController != null) {
                     navigationDrawerActivityController.getUserLocation(UTILEnum.GPS);
-                    if(!item.getIcon().equals(getResources()
-                            .getDrawable(R.drawable.ic_my_location_gray_24dp))){
+                    if (!item.getIcon().equals(getResources()
+                            .getDrawable(R.drawable.ic_my_location_gray_24dp))) {
                         item.setIcon(getResources()
                                 .getDrawable(R.drawable.ic_my_location_gray_24dp));
                     }
@@ -199,6 +205,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
             fragment = TripFragment.newInstance();
 
         } else if (id == R.id.nav_slideshow) {
+            fragment = MapFragment.newInstance();
 
         } else if (id == R.id.nav_manage) {
 
@@ -220,6 +227,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.nv_frame_layout, fragment)
+                .addToBackStack(null)
                 .commit();
 
     }
@@ -260,4 +268,20 @@ public class NavigationDrawerActivity extends AppCompatActivity
     }
 
 
+    @Override
+    public void onMapInitializatedListener() {
+        if (fragment != null && fragment instanceof MapFragment) {
+            LocationDTO locationDTO = null;
+            if (navigationDrawerActivityController != null &&
+                    navigationDrawerActivityController.getLocation() != null) {
+                locationDTO = new LocationDTO(navigationDrawerActivityController.getLocation()
+                        .getLatitude(), navigationDrawerActivityController.getLocation().getLongitude());
+            } else {
+                locationDTO = new LocationDTO(Double.parseDouble(getString(R.string.medellin_latitude)),
+                        Double.parseDouble(getString(R.string.medellin_longitude)));
+            }
+
+            ((MapFragment) fragment).loadMapLayer(locationDTO);
+        }
+    }
 }

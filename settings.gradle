@@ -1,1 +1,1 @@
-include ':app', ':utilsandroid'
+include ':app', ':utilsandroid', ':wearmodule', ':GideMeCore', ':androidesentials'

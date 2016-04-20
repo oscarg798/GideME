@@ -12,13 +12,14 @@ import android.view.MenuItem;
 
 import com.gideme.R;
 import com.gideme.controllers.PlacesByCategoryController;
-import com.gideme.entities.dto.LocationDTO;
-import com.gideme.entities.dto.PlaceDTO;
-import com.gideme.entities.model.Place;
-import com.gideme.entities.utils.CoupleParams;
+
+import com.gideme.core.entities.dto.LocationDTO;
+import com.gideme.core.entities.dto.PlaceDTO;
+import com.gideme.core.entities.model.Place;
 import com.gideme.presentation.adapters.PlaceAdapter;
 import com.gideme.presentation.listeners.RecyclerItemOnClickListener;
 import com.gideme.presentation.listeners.interfaces.OnItemClickListener;
+import com.rm.androidesentials.model.utils.CoupleParams;
 
 import java.util.ArrayList;
 import java.util.List;
