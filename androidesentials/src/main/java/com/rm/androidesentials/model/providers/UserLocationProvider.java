@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 
 import com.rm.androidesentials.model.interfaces.LocationProviderUtils;
 import com.rm.androidesentials.utils.ErrorCodes;
@@ -38,7 +37,7 @@ public class UserLocationProvider extends Service implements LocationListener {
 
     private List<LocationProviderUtils.onSubscribeforLocationUpdates> onSubscribeforLocationUpdatesList;
 
-    private boolean hasGotLocationOnce = false;
+    private boolean isGettingLocationUpdates = false;
 
     public static UserLocationProvider UserLocationProvider;
 
@@ -59,80 +58,55 @@ public class UserLocationProvider extends Service implements LocationListener {
         return UserLocationProvider;
     }
 
-    public void getUserLocationByNetwork(LocationProviderUtils.onGetLocation onGetLocation) {
-        if (isNetworkEnabled()) {
-            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            locationManager.requestLocationUpdates(
-                    LocationManager.NETWORK_PROVIDER,
-                    MIN_TIME_BW_UPDATES,
-                    MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-            Log.d("Network", "Network");
-            if (locationManager != null) {
-                userLocation = locationManager
-                        .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                if (userLocation != null) {
-                    onGetLocation.locationGot(userLocation);
-                    hasGotLocationOnce = true;
-                } else {
-                    onGetLocation
-                            .errorGettingLocation(ErrorCodes.CAN_NOT_GET_USER_LOCATION);
-                }
-            } else {
-                onGetLocation
-                        .errorGettingLocation(ErrorCodes.LOCATION_MANAGER_UNAVALAIBLE);
-            }
 
-            locationManager.removeUpdates(this);
-
-        } else {
-            onGetLocation
-                    .errorGettingLocation(ErrorCodes.NETWORK_PROVIDER_DISABLE);
-        }
-    }
-
-    public void getUserLocationByGPS(LocationProviderUtils.onGetLocation onGetLocation
+    public void getUserLocaton(String provider, LocationProviderUtils.onGetLocation onGetLocation
             , LocationProviderUtils.onSubscribeforLocationUpdates
-                                             onSubscribeforLocationUpdates) {
+                                       onSubscribeforLocationUpdates) {
+
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            return;
+        }
+        if (locationManager == null) {
+            onGetLocation.errorGettingLocation(ErrorCodes.LOCATION_MANAGER_UNAVALAIBLE);
+        }
+
 
         getLocationUpdates(onSubscribeforLocationUpdates);
-        if (isGPSEnabled()) {
 
-            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            locationManager.requestLocationUpdates(
-                    LocationManager.NETWORK_PROVIDER, 0, 0, this);
-            Log.d("GPS Enabled", "GPS Enabled");
-            if (locationManager != null) {
-                userLocation = locationManager
-                        .getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                if (userLocation != null) {
-                    hasGotLocationOnce = true;
-                    onGetLocation.locationGot(userLocation);
+
+        switch (provider) {
+            case LocationManager.GPS_PROVIDER: {
+                if (!isGPSEnabled()) {
+                    onGetLocation
+                            .errorGettingLocation(ErrorCodes.GPS_PROVIDER_DISABLE);
+                    isGettingLocationUpdates = true;
+                    return;
                 }
-            } else {
-                onGetLocation
-                        .errorGettingLocation(ErrorCodes.LOCATION_MANAGER_UNAVALAIBLE);
+
+                break;
+            }
+            case LocationManager.NETWORK_PROVIDER: {
+                if (!isNetworkEnabled()) {
+                    onGetLocation.errorGettingLocation(ErrorCodes.NETWORK_PROVIDER_DISABLE);
+                    return;
+                }
+                break;
             }
         }
 
+        locationManager.requestLocationUpdates(
+                provider, 0, 0, this);
+
+        userLocation = locationManager.getLastKnownLocation(provider);
+
+
+        if (userLocation != null) {
+            onGetLocation.locationGot(userLocation);
+        }
+
     }
+
 
     private void getLocationUpdates(LocationProviderUtils.onSubscribeforLocationUpdates onSubscribeforLocationUpdates) {
         if (this.onSubscribeforLocationUpdatesList == null) {
@@ -178,26 +152,31 @@ public class UserLocationProvider extends Service implements LocationListener {
             for (LocationProviderUtils.onSubscribeforLocationUpdates on : onSubscribeforLocationUpdatesList) {
                 on.locationUpdateGot(location);
             }
-
-            onSubscribeforLocationUpdatesList = null;
-            if (locationManager != null) {
-                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
-                locationManager.removeUpdates(this);
-
+        }
+        if (locationManager != null) {
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
             }
 
 
+            if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
+                locationManager.removeUpdates(this);
+                onSubscribeforLocationUpdatesList = null;
+                unSuscribeLocationUpdates();
+                userLocation = location;
+                locationManager = null;
+                isGettingLocationUpdates = false;
+            }
         }
-        unSuscribeLocationUpdates();
+
+
     }
 
     @Override
@@ -227,5 +206,13 @@ public class UserLocationProvider extends Service implements LocationListener {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    public boolean isGettingLocationUpdates() {
+        return isGettingLocationUpdates;
+    }
+
+    public void setGettingLocationUpdates(boolean gettingLocationUpdates) {
+        isGettingLocationUpdates = gettingLocationUpdates;
     }
 }

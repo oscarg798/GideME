@@ -50,6 +50,11 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment {
 
     private MapFragmentController mapFragmentController;
 
+    private Marker userLocationMarket;
+
+    private CameraPosition cameraPosition;
+    private CameraUpdate camUpd;
+
 
     public MapFragment() {
         // Required empty public constructor
@@ -75,6 +80,13 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment {
                 //map.setMyLocationEnabled(true);
                 iMapFragment.onMapInitializatedListener();
 
+                map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+                    @Override
+                    public void onCameraChange(CameraPosition cameraPosition) {
+                        Log.i("UPDATED","CAMERA");
+                    }
+                });
+
             }
         });
 
@@ -90,34 +102,41 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment {
     }
 
     private void makeCameraUpdate(LocationDTO locationDTO, int zoom) {
-        CameraPosition posicion = new CameraPosition.Builder().target(
+        cameraPosition = new CameraPosition.Builder().target(
                 new LatLng(locationDTO.getLat(), locationDTO.getLng()))
                 .zoom(zoom).build();
-        CameraUpdate camUpd = CameraUpdateFactory.newCameraPosition(posicion);
+        camUpd = CameraUpdateFactory.newCameraPosition(cameraPosition);
         map.animateCamera(camUpd, 2000, null);
+
+
     }
 
     public void loadMapLayer(LocationDTO locationDTO) {
+        if (userLocationMarket == null) {
+            userLocationMarket = map.addMarker(new MarkerOptions()
+                    .position(new LatLng(locationDTO.getLat(), locationDTO.getLng()))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+            try {
+                KmlLayer layer = new KmlLayer(map, com.gideme.core.R.raw.pico,
+                        getActivity().getApplicationContext());
+                layer.addLayerToMap();
 
-        map.addMarker(new MarkerOptions()
-                .position(new LatLng(locationDTO.getLat(), locationDTO.getLng()))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-        try {
-            KmlLayer layer = new KmlLayer(map, com.gideme.core.R.raw.pico,
-                    getActivity().getApplicationContext());
-            layer.addLayerToMap();
+                List<KmlContainer> kmlContainers = (List<KmlContainer>) layer.getContainers();
+                kmlContainers = (List<KmlContainer>) kmlContainers.get(0).getContainers();
+                mapFragmentController.checkTransitRestriction(kmlContainers.get(0).getPlacemarks(),
+                        new LatLng(locationDTO.getLat(), locationDTO.getLng()));
 
-            List<KmlContainer> kmlContainers = (List<KmlContainer>) layer.getContainers();
-            kmlContainers = (List<KmlContainer>) kmlContainers.get(0).getContainers();
-            mapFragmentController.checkTransitRestriction(kmlContainers.get(0).getPlacemarks(),
-                    new LatLng(locationDTO.getLat(), locationDTO.getLng()));
+                makeCameraUpdate(locationDTO, LAYER_ZOOM);
 
-            makeCameraUpdate(locationDTO, LAYER_ZOOM);
-
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            userLocationMarket.setPosition(new LatLng(locationDTO.getLat(), locationDTO.getLng()));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
+                    locationDTO.getLat(), locationDTO.getLng()), PLACE_ZOOM));
         }
     }
 

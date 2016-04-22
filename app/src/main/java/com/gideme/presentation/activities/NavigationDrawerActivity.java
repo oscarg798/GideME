@@ -3,9 +3,6 @@ package com.gideme.presentation.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.IntentSender;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,14 +34,13 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.rm.androidesentials.model.providers.UserLocationProvider;
 import com.rm.androidesentials.utils.UTILEnum;
-
-import java.io.Serializable;
 
 public class NavigationDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        ResultCallback<LocationSettingsResult>, IFragmentInterfaces.IMapFragment{
+        ResultCallback<LocationSettingsResult>, IFragmentInterfaces.IMapFragment {
 
 
     protected Fragment fragment;
@@ -111,7 +107,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
                     case LocationSettingsStatusCodes.SUCCESS:
                         // All location settings are satisfied. The client can initialize location
                         // requests here.
-                        navigationDrawerActivityController.getUserLocation(UTILEnum.GPS);
+                        navigationDrawerActivityController.getUserLocation();
 
                         break;
                     case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
@@ -136,8 +132,13 @@ public class NavigationDrawerActivity extends AppCompatActivity
     }
 
     public void userLocationGot(Location location) {
-        if (fragment != null && fragment instanceof CategoriesFragment) {
-            ((CategoriesFragment) fragment).onLocationGot(location);
+        if (fragment != null) {
+            if (fragment instanceof CategoriesFragment) {
+                ((CategoriesFragment) fragment).onLocationGot(location);
+            } else if (fragment instanceof MapFragment) {
+                ((MapFragment) fragment).loadMapLayer(new LocationDTO(location.getLatitude(), location.getLongitude()));
+            }
+
         }
         if (menuItem != null) {
 
@@ -176,8 +177,13 @@ public class NavigationDrawerActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         switch (id) {
             case R.id.location_avalaible: {
+                if (UserLocationProvider.getLocationProvider(getApplicationContext())
+                        .isGettingLocationUpdates()) {
+                    return super.onOptionsItemSelected(item);
+
+                }
                 if (navigationDrawerActivityController != null) {
-                    navigationDrawerActivityController.getUserLocation(UTILEnum.GPS);
+                    navigationDrawerActivityController.getUserLocation();
                     if (!item.getIcon().equals(getResources()
                             .getDrawable(R.drawable.ic_my_location_gray_24dp))) {
                         item.setIcon(getResources()

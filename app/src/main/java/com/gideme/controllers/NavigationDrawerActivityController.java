@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationManager;
 import android.provider.Settings;
 
 import com.gideme.R;
@@ -72,20 +73,14 @@ public class NavigationDrawerActivityController extends AbstractController
         }
     }
 
-    public void getUserLocation(UTILEnum utilEnum) {
-        switch (utilEnum) {
-            case GPS:
-                UserLocationProvider
-                        .getLocationProvider(getActivity().getApplicationContext())
-                        .getUserLocationByGPS(this, this);
-                break;
-            case NETWORK:
-                UserLocationProvider
-                        .getLocationProvider(getActivity().getApplicationContext())
-                        .getUserLocationByNetwork(this);
-        }
+    public void getUserLocation() {
+        UserLocationProvider
+                .getLocationProvider(getActivity().getApplicationContext())
+                .getUserLocaton(LocationManager.NETWORK_PROVIDER, this, this);
 
-
+        UserLocationProvider
+                .getLocationProvider(getActivity().getApplicationContext())
+                .getUserLocaton(LocationManager.GPS_PROVIDER, this, this);
     }
 
 

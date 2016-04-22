@@ -7,7 +7,7 @@ import java.io.Serializable;
  * Clase para referenciar un objeto
  * que hace referencia a la latitud y longitud
  */
-public class LocationDTO  implements Serializable{
+public class LocationDTO implements Serializable{
 
     /**
      * Latitud
